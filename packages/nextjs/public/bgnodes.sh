@@ -70,10 +70,17 @@ if [ "$os_name" = "Darwin" ] || [ "$os_name" = "Linux" ]; then
   fi
 
   if command -v node >/dev/null 2>&1; then
-      echo "Node.js is installed. Version:"
-      node -v
+      node_version=$(node -v | cut -d 'v' -f 2 | awk -F '.' '{print $1 "." $2}')
+
+      if awk "BEGIN {exit !($node_version >= 18.17)}"; then
+          echo "Node.js is installed. Version:"
+          node -v
+      else
+          echo "Node.js version is less than 18.17. Please update to at least v18.17 (https://nodejs.org/en/download)"
+          exit 1
+      fi
   else
-      echo "Please install node.js (https://nodejs.org/en/download)"
+      echo "Please install Node.js (https://nodejs.org/en/download)"
       exit 1
   fi
 
@@ -87,13 +94,12 @@ if [ "$os_name" = "Darwin" ] || [ "$os_name" = "Linux" ]; then
   echo -e "\n"
   # ---------- Check For Dependencies ----------
 
-  # ---------- Install Consensus Client ----------
+  # ---------- Install Execution Client ----------
   if [ "$e" == "geth" ]; then
     if ! command -v geth >/dev/null 2>&1; then
       echo "Installing Geth."
       brew tap ethereum/ethereum
       brew install ethereum
-      cd "$HOME/ethereum/execution"
     else
       echo "Geth is already installed. Version:"
       geth -v
@@ -102,28 +108,27 @@ if [ "$os_name" = "Darwin" ] || [ "$os_name" = "Linux" ]; then
       echo "Installing Reth."
       # Todo: Add reth install code
   fi
-  # ---------- Install Consensus Client ----------
-
   # ---------- Install Execution Client ----------
-  if [ ! -d "$HOME/ethereum/consensus" ]; then
-      echo "Creating '~/ethereum/consensus'"
-      mkdir -p "$HOME/ethereum/consensus"
-  fi
 
-    if [ ! -d "$HOME/ethereum/jwt" ]; then
-      echo "Creating '~/ethereum/jwt'"
-      mkdir -p "$HOME/ethereum/jwt"
+  # ---------- Install Consensus Client ----------
+  if [ ! -d "$HOME/ethereum/jwt" ]; then
+    echo "Creating '~/ethereum/jwt'"
+    mkdir -p "$HOME/ethereum/jwt"
   fi
 
   if [ "$c" == "prysm" ]; then
-    if [ ! -f "$HOME/ethereum/consensus/prysm.sh" ]; then
+    if [ ! -f "$HOME/ethereum/prysm/prysm.sh" ]; then
       echo "Installing Prysm."
-      cd "$HOME/ethereum/consensus"
+      if [ ! -d "$HOME/ethereum/prysm" ]; then
+        echo "Creating '~/ethereum/prysm'"
+        mkdir -p "$HOME/ethereum/prysm"
+      fi
+      cd "$HOME/ethereum/prysm"
       curl https://raw.githubusercontent.com/prysmaticlabs/prysm/master/prysm.sh --output prysm.sh && chmod +x prysm.sh
 
       if ! command -v gpg >/dev/null 2>&1; then
-          echo "Installing gpg (required for jwt.hex creation)."
-          brew install gpg
+        echo "Installing gpg (required for jwt.hex creation)."
+        brew install gpg
       fi
 
       echo "Creating JWT secret."
@@ -136,7 +141,7 @@ if [ "$os_name" = "Darwin" ] || [ "$os_name" = "Linux" ]; then
       echo "Installing Lighthouse."
       # Todo: Add Lighthouse install code
   fi
-  # ---------- Install Execution Client ----------
+  # ---------- Install Consensus Client ----------
 fi
 # -------------------- For Linux /MacOS --------------------
 
