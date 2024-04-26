@@ -1,4 +1,6 @@
-const { execSync } = require("child_process");
+const blessed = require("blessed");
+const contrib = require("blessed-contrib");
+const { execSync, spawn } = require("child_process");
 const os = require("os");
 const fs = require("fs");
 const path = require("path");
@@ -52,6 +54,90 @@ args.forEach((val, index) => {
       break;
   }
 });
+
+function startChain(jwtDir) {
+  // Create a screen object
+  const screen = blessed.screen();
+
+  // Create two log boxes
+  const executionLog = contrib.log({
+    fg: "green",
+    selectedFg: "green",
+    label: "Geth Logs",
+    top: "0%",
+    height: "50%",
+    width: "100%",
+  });
+
+  const consensusLog = contrib.log({
+    fg: "yellow",
+    selectedFg: "yellow",
+    label: "Prysm Logs",
+    top: "50%",
+    height: "50%",
+    width: "100%",
+  });
+
+  screen.append(executionLog);
+  screen.append(consensusLog);
+  screen.render();
+
+  // Start geth as a child process
+  const execution = spawn("geth", [
+    "--mainnet",
+    "--http",
+    "--http.api",
+    "eth,net,engine,admin",
+    "--http.addr",
+    "0.0.0.0",
+    "--syncmode",
+    "full",
+    "--authrpc.jwtsecret",
+    `${jwtDir}/jwt.hex`,
+  ]);
+
+  execution.stdout.on("data", data => {
+    executionLog.log(data.toString());
+  });
+
+  execution.stderr.on("data", data => {
+    executionLog.log(data.toString());
+  });
+
+  const prysmDir = path.join(os.homedir(), "bgnode", "prysm");
+
+  const consensus = spawn(`${prysmDir}/prysm.sh`, [
+    "beacon-chain",
+    "--execution-endpoint=http://localhost:8551",
+    "--mainnet",
+    "--jwt-secret",
+    `${jwtDir}/jwt.hex`,
+  ]);
+
+  consensus.stdout.on("data", data => {
+    consensusLog.log(data.toString());
+  });
+
+  consensus.stderr.on("data", data => {
+    consensusLog.log(data.toString());
+  });
+
+  // Handle close
+  execution.on("close", code => {
+    executionLog.log(`Geth process exited with code ${code}`);
+  });
+
+  consensus.on("close", code => {
+    consensusLog.log(`Prysm process exited with code ${code}`);
+  });
+
+  // Quit on Escape, q, or Control-C.
+  screen.key(["escape", "q", "C-c"], function (ch, key) {
+    return process.exit(0);
+  });
+
+  screen.render();
+}
 
 console.log(`Execution client selected: ${executionClient}`);
 console.log(`Consensus client selected: ${consensusClient}\n`);
@@ -216,3 +302,5 @@ if (["darwin", "linux"].includes(os.platform())) {
     }
   }
 }
+
+startChain(jwtDir);
