@@ -121,10 +121,10 @@ if (["darwin", "linux"].includes(os.platform())) {
   }
 } else if (os.platform() === "win32") {
   try {
-    const output = execSync('git --version', { encoding: 'utf-8' }); // ensures the output is a string
-    console.log('Git is installed:', output);
+    const output = execSync("git --version", { encoding: "utf-8" }); // ensures the output is a string
+    console.log("Git is installed:", output);
   } catch (error) {
-      console.error('Please install Git (https://git-scm.com/downloads).');
+    console.error("Please install Git (https://git-scm.com/downloads).");
   }
 
   if (executionClient === "geth") {
@@ -136,14 +136,17 @@ if (["darwin", "linux"].includes(os.platform())) {
         console.log(`Creating '${gethDir}'`);
         fs.mkdirSync(gethDir, { recursive: true });
       }
-      execSync(`cd ${gethDir} && curl https://gethstore.blob.core.windows.net/builds/geth-windows-amd64-1.14.0-87246f3c.zip --output geth.zip`, { stdio: "inherit" });
+      execSync(
+        `cd ${gethDir} && curl https://gethstore.blob.core.windows.net/builds/geth-windows-amd64-1.14.0-87246f3c.zip --output geth.zip`,
+        { stdio: "inherit" },
+      );
       execSync(`cd ${gethDir} && tar -xf ${gethDir}/geth.zip`, { stdio: "inherit" });
       execSync(`cd ${gethDir}/geth-windows-amd64-1.14.0-87246f3c && move geth.exe .. `, { stdio: "inherit" });
       execSync(`cd ${gethDir} && del geth.zip && rd /S /Q geth-windows-amd64-1.14.0-87246f3c`, { stdio: "inherit" });
     } else {
       color("36", "Geth is already installed.");
     }
-  } else if (executionClient === "reth")  {
+  } else if (executionClient === "reth") {
     const rethDir = path.join(os.homedir(), "bgnode", "reth");
     const rethScript = path.join(rethDir, "reth.exe");
     if (!fs.existsSync(rethScript)) {
@@ -152,8 +155,13 @@ if (["darwin", "linux"].includes(os.platform())) {
         console.log(`Creating '${rethDir}'`);
         fs.mkdirSync(rethDir, { recursive: true });
       }
-      execSync(`cd ${rethDir} && curl -LO https://github.com/paradigmxyz/reth/releases/download/v0.2.0-beta.6/reth-v0.2.0-beta.6-x86_64-pc-windows-gnu.tar.gz`, { stdio: "inherit" });
-      execSync(`cd ${rethDir} && tar -xzf ${rethDir}/reth-v0.2.0-beta.6-x86_64-pc-windows-gnu.tar.gz`, { stdio: "inherit" });
+      execSync(
+        `cd ${rethDir} && curl -LO https://github.com/paradigmxyz/reth/releases/download/v0.2.0-beta.6/reth-v0.2.0-beta.6-x86_64-pc-windows-gnu.tar.gz`,
+        { stdio: "inherit" },
+      );
+      execSync(`cd ${rethDir} && tar -xzf ${rethDir}/reth-v0.2.0-beta.6-x86_64-pc-windows-gnu.tar.gz`, {
+        stdio: "inherit",
+      });
       execSync(`cd ${rethDir} && del reth-v0.2.0-beta.6-x86_64-pc-windows-gnu.tar.gz`, { stdio: "inherit" });
     } else {
       color("36", "Reth is already installed.");
@@ -169,14 +177,14 @@ if (["darwin", "linux"].includes(os.platform())) {
         console.log(`Creating '${prysmDir}'`);
         fs.mkdirSync(prysmDir, { recursive: true });
       }
-      execSync(`cd ${prysmDir} && curl https://raw.githubusercontent.com/prysmaticlabs/prysm/master/prysm.bat --output prysm.bat`, { stdio: "inherit" });
+      execSync(
+        `cd ${prysmDir} && curl https://raw.githubusercontent.com/prysmaticlabs/prysm/master/prysm.bat --output prysm.bat`,
+        { stdio: "inherit" },
+      );
       execSync("reg add HKCU\\Console /v VirtualTerminalLevel /t REG_DWORD /d 1", { stdio: "inherit" });
       console.log("Creating JWT secret.");
-      execSync( `cd ${prysmDir} && prysm.bat beacon-chain generate-auth-secret`, { stdio: "inherit", } );
-      fs.renameSync(
-        path.join(prysmDir, "jwt.hex"),
-        path.join(jwtDir, "jwt.hex")
-      );
+      execSync(`cd ${prysmDir} && prysm.bat beacon-chain generate-auth-secret`, { stdio: "inherit" });
+      fs.renameSync(path.join(prysmDir, "jwt.hex"), path.join(jwtDir, "jwt.hex"));
     } else {
       color("36", "Prysm is already installed.");
     }
@@ -189,8 +197,13 @@ if (["darwin", "linux"].includes(os.platform())) {
         console.log(`Creating '${lighthouseDir}'`);
         fs.mkdirSync(lighthouseDir, { recursive: true });
       }
-      execSync(`cd ${lighthouseDir} && curl -LO https://github.com/sigp/lighthouse/releases/download/v5.1.3/lighthouse-v5.1.3-x86_64-windows.tar.gz`, { stdio: "inherit" });
-      execSync(`cd ${lighthouseDir} && tar -xzf ${lighthouseDir}/lighthouse-v5.1.3-x86_64-windows.tar.gz`, { stdio: "inherit" });
+      execSync(
+        `cd ${lighthouseDir} && curl -LO https://github.com/sigp/lighthouse/releases/download/v5.1.3/lighthouse-v5.1.3-x86_64-windows.tar.gz`,
+        { stdio: "inherit" },
+      );
+      execSync(`cd ${lighthouseDir} && tar -xzf ${lighthouseDir}/lighthouse-v5.1.3-x86_64-windows.tar.gz`, {
+        stdio: "inherit",
+      });
       execSync(`cd ${lighthouseDir} && del lighthouse-v5.1.3-x86_64-windows.tar.gz`, { stdio: "inherit" });
       // console.log("Creating JWT secret.");
       // execSync( `cd ${lighthouseDir} && prysm.bat beacon-chain generate-auth-secret`, { stdio: "inherit", } );
