@@ -55,9 +55,11 @@ args.forEach((val, index) => {
   }
 });
 
-function startChain(jwtDir) {
+function startChain(executionClient, consensusClient, jwtDir) {
   // Create a screen object
   const screen = blessed.screen();
+
+  console.log(executionClient);
 
   // Create two log boxes
   const executionLog = contrib.log({
@@ -82,19 +84,34 @@ function startChain(jwtDir) {
   screen.append(consensusLog);
   screen.render();
 
-  // Start geth as a child process
-  const execution = spawn("geth", [
-    "--mainnet",
-    "--http",
-    "--http.api",
-    "eth,net,engine,admin",
-    "--http.addr",
-    "0.0.0.0",
-    "--syncmode",
-    "full",
-    "--authrpc.jwtsecret",
-    `${jwtDir}/jwt.hex`,
-  ]);
+  let execution;
+  if (executionClient === "geth") {
+    execution = spawn("geth", [
+      "--mainnet",
+      "--http",
+      "--http.api",
+      "eth,net,engine,admin",
+      "--http.addr",
+      "0.0.0.0",
+      "--syncmode",
+      "full",
+      "--authrpc.jwtsecret",
+      `${jwtDir}/jwt.hex`,
+    ]);
+  } else if (executionClient === "reth") {
+    execution = spawn("geth", [
+      "--mainnet",
+      "--http",
+      "--http.api",
+      "eth,net,engine,admin",
+      "--http.addr",
+      "0.0.0.0",
+      "--syncmode",
+      "full",
+      "--authrpc.jwtsecret",
+      `${jwtDir}/jwt.hex`,
+    ]);
+  }
 
   execution.stdout.on("data", data => {
     executionLog.log(data.toString());
@@ -106,13 +123,24 @@ function startChain(jwtDir) {
 
   const prysmDir = path.join(os.homedir(), "bgnode", "prysm");
 
-  const consensus = spawn(`${prysmDir}/prysm.sh`, [
-    "beacon-chain",
-    "--execution-endpoint=http://localhost:8551",
-    "--mainnet",
-    "--jwt-secret",
-    `${jwtDir}/jwt.hex`,
-  ]);
+  let consensus;
+  if (consensusClient === "prysm") {
+    consensus = spawn(`${prysmDir}/prysm.sh`, [
+      "beacon-chain",
+      "--execution-endpoint=http://localhost:8551",
+      "--mainnet",
+      "--jwt-secret",
+      `${jwtDir}/jwt.hex`,
+    ]);
+  } else if (consensusClient === "lighthouse") {
+    consensus = spawn(`${prysmDir}/prysm.sh`, [
+      "beacon-chain",
+      "--execution-endpoint=http://localhost:8551",
+      "--mainnet",
+      "--jwt-secret",
+      `${jwtDir}/jwt.hex`,
+    ]);
+  }
 
   consensus.stdout.on("data", data => {
     consensusLog.log(data.toString());
@@ -303,4 +331,4 @@ if (["darwin", "linux"].includes(os.platform())) {
   }
 }
 
-startChain(jwtDir);
+startChain(executionClient, consensusClient, jwtDir);
