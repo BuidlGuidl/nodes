@@ -41,6 +41,7 @@
   },
   "dependencies": {
     "blessed": "^0.1.81",
-    "blessed-contrib": "^4.11.0"
+    "blessed-contrib": "^4.11.0",
+    "systeminformation": "^5.22.7"
   }
 }

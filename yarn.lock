@@ -48,14 +48,14 @@ __metadata:
   linkType: hard
 
 "@babel/generator@npm:^7.23.0":
-  version: 7.24.4
-  resolution: "@babel/generator@npm:7.24.4"
+  version: 7.24.5
+  resolution: "@babel/generator@npm:7.24.5"
   dependencies:
-    "@babel/types": ^7.24.0
+    "@babel/types": ^7.24.5
     "@jridgewell/gen-mapping": ^0.3.5
     "@jridgewell/trace-mapping": ^0.3.25
     jsesc: ^2.5.1
-  checksum: 1b6146c31386c9df3eb594a2c36b5c98da4f67f7c06edb3d68a442b92516b21bb5ba3ad7dbe0058fe76625ed24d66923e15c95b0df75ef1907d4068921a699b8
+  checksum: a08c0ab900b36e1a17863e18e3216153322ea993246fd7a358ba38a31cfb15bab2af1dc178b2adafe4cb8a9f3ab0e0ceafd3fe6e8ca870dffb435b53b2b2a803
   languageName: node
   linkType: hard
 
@@ -86,55 +86,55 @@ __metadata:
   linkType: hard
 
 "@babel/helper-split-export-declaration@npm:^7.22.6":
-  version: 7.22.6
-  resolution: "@babel/helper-split-export-declaration@npm:7.22.6"
+  version: 7.24.5
+  resolution: "@babel/helper-split-export-declaration@npm:7.24.5"
   dependencies:
-    "@babel/types": ^7.22.5
-  checksum: e141cace583b19d9195f9c2b8e17a3ae913b7ee9b8120246d0f9ca349ca6f03cb2c001fd5ec57488c544347c0bb584afec66c936511e447fd20a360e591ac921
+    "@babel/types": ^7.24.5
+  checksum: f23ab6942568084a57789462ce55dc9631aef1d2142ffa2ee28fc411ab55ed3ca65adf109e48655aa349bf8df7ca6dd81fd91c8c229fee1dc77e283189dc83c2
   languageName: node
   linkType: hard
 
-"@babel/helper-string-parser@npm:^7.23.4":
+"@babel/helper-string-parser@npm:^7.24.1":
   version: 7.24.1
   resolution: "@babel/helper-string-parser@npm:7.24.1"
   checksum: 8404e865b06013979a12406aab4c0e8d2e377199deec09dfe9f57b833b0c9ce7b6e8c1c553f2da8d0bcd240c5005bd7a269f4fef0d628aeb7d5fe035c436fb67
   languageName: node
   linkType: hard
 
-"@babel/helper-validator-identifier@npm:^7.16.7, @babel/helper-validator-identifier@npm:^7.22.20":
-  version: 7.22.20
-  resolution: "@babel/helper-validator-identifier@npm:7.22.20"
-  checksum: 136412784d9428266bcdd4d91c32bcf9ff0e8d25534a9d94b044f77fe76bc50f941a90319b05aafd1ec04f7d127cd57a179a3716009ff7f3412ef835ada95bdc
+"@babel/helper-validator-identifier@npm:^7.16.7, @babel/helper-validator-identifier@npm:^7.24.5":
+  version: 7.24.5
+  resolution: "@babel/helper-validator-identifier@npm:7.24.5"
+  checksum: 75d6f9f475c08f3be87bae4953e9b8d8c72983e16ed2860870b328d048cb20dccb4fcbf85eacbdd817ea1efbb38552a6db9046e2e37bfe13bdec44ac8939024c
   languageName: node
   linkType: hard
 
 "@babel/highlight@npm:^7.24.2":
-  version: 7.24.2
-  resolution: "@babel/highlight@npm:7.24.2"
+  version: 7.24.5
+  resolution: "@babel/highlight@npm:7.24.5"
   dependencies:
-    "@babel/helper-validator-identifier": ^7.22.20
+    "@babel/helper-validator-identifier": ^7.24.5
     chalk: ^2.4.2
     js-tokens: ^4.0.0
     picocolors: ^1.0.0
-  checksum: 5f17b131cc3ebf3ab285a62cf98a404aef1bd71a6be045e748f8d5bf66d6a6e1aefd62f5972c84369472e8d9f22a614c58a89cd331eb60b7ba965b31b1bbeaf5
+  checksum: eece0e63e9210e902f1ee88f15cabfa31d2693bd2e56806eb849478b859d274c24477081c649cee6a241c4aed7da6f3e05c7afa5c3cd70094006ed095292b0d0
   languageName: node
   linkType: hard
 
 "@babel/parser@npm:^7.20.5, @babel/parser@npm:^7.23.0, @babel/parser@npm:^7.24.0":
-  version: 7.24.4
-  resolution: "@babel/parser@npm:7.24.4"
+  version: 7.24.5
+  resolution: "@babel/parser@npm:7.24.5"
   bin:
     parser: ./bin/babel-parser.js
-  checksum: 94c9e3e592894cd6fc57c519f4e06b65463df9be5f01739bb0d0bfce7ffcf99b3c2fdadd44dc59cc858ba2739ce6e469813a941c2f2dfacf333a3b2c9c5c8465
+  checksum: a251ea41bf8b5f61048beb320d43017aff68af5a3506bd2ef392180f5fa32c1061513171d582bb3d46ea48e3659dece8b3ba52511a2566066e58abee300ce2a0
   languageName: node
   linkType: hard
 
 "@babel/runtime@npm:^7.12.5, @babel/runtime@npm:^7.19.4, @babel/runtime@npm:^7.20.6, @babel/runtime@npm:^7.21.0, @babel/runtime@npm:^7.23.2":
-  version: 7.24.4
-  resolution: "@babel/runtime@npm:7.24.4"
+  version: 7.24.5
+  resolution: "@babel/runtime@npm:7.24.5"
   dependencies:
     regenerator-runtime: ^0.14.0
-  checksum: 2f27d4c0ffac7ae7999ac0385e1106f2a06992a8bdcbf3da06adcac7413863cd08c198c2e4e970041bbea849e17f02e1df18875539b6afba76c781b6b59a07c3
+  checksum: 755383192f3ac32ba4c62bd4f1ae92aed5b82d2c6665f39eb28fa94546777cf5c63493ea92dd03f1c2e621b17e860f190c056684b7f234270fdc91e29beda063
   languageName: node
   linkType: hard
 
@@ -177,14 +177,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/types@npm:^7.17.0, @babel/types@npm:^7.22.5, @babel/types@npm:^7.23.0, @babel/types@npm:^7.24.0, @babel/types@npm:^7.8.3":
-  version: 7.24.0
-  resolution: "@babel/types@npm:7.24.0"
+"@babel/types@npm:^7.17.0, @babel/types@npm:^7.22.5, @babel/types@npm:^7.23.0, @babel/types@npm:^7.24.0, @babel/types@npm:^7.24.5, @babel/types@npm:^7.8.3":
+  version: 7.24.5
+  resolution: "@babel/types@npm:7.24.5"
   dependencies:
-    "@babel/helper-string-parser": ^7.23.4
-    "@babel/helper-validator-identifier": ^7.22.20
+    "@babel/helper-string-parser": ^7.24.1
+    "@babel/helper-validator-identifier": ^7.24.5
     to-fast-properties: ^2.0.0
-  checksum: 4b574a37d490f621470ff36a5afaac6deca5546edcb9b5e316d39acbb20998e9c2be42f3fc0bf2b55906fc49ff2a5a6a097e8f5a726ee3f708a0b0ca93aed807
+  checksum: 8eeeacd996593b176e649ee49d8dc3f26f9bb6aa1e3b592030e61a0e58ea010fb018dccc51e5314c8139409ea6cbab02e29b33e674e1f6962d8e24c52da6375b
   languageName: node
   linkType: hard
 
@@ -1405,66 +1405,66 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nomicfoundation/edr-darwin-arm64@npm:0.3.5":
-  version: 0.3.5
-  resolution: "@nomicfoundation/edr-darwin-arm64@npm:0.3.5"
+"@nomicfoundation/edr-darwin-arm64@npm:0.3.7":
+  version: 0.3.7
+  resolution: "@nomicfoundation/edr-darwin-arm64@npm:0.3.7"
   conditions: os=darwin & cpu=arm64
   languageName: node
   linkType: hard
 
-"@nomicfoundation/edr-darwin-x64@npm:0.3.5":
-  version: 0.3.5
-  resolution: "@nomicfoundation/edr-darwin-x64@npm:0.3.5"
+"@nomicfoundation/edr-darwin-x64@npm:0.3.7":
+  version: 0.3.7
+  resolution: "@nomicfoundation/edr-darwin-x64@npm:0.3.7"
   conditions: os=darwin & cpu=x64
   languageName: node
   linkType: hard
 
-"@nomicfoundation/edr-linux-arm64-gnu@npm:0.3.5":
-  version: 0.3.5
-  resolution: "@nomicfoundation/edr-linux-arm64-gnu@npm:0.3.5"
+"@nomicfoundation/edr-linux-arm64-gnu@npm:0.3.7":
+  version: 0.3.7
+  resolution: "@nomicfoundation/edr-linux-arm64-gnu@npm:0.3.7"
   conditions: os=linux & cpu=arm64 & libc=glibc
   languageName: node
   linkType: hard
 
-"@nomicfoundation/edr-linux-arm64-musl@npm:0.3.5":
-  version: 0.3.5
-  resolution: "@nomicfoundation/edr-linux-arm64-musl@npm:0.3.5"
+"@nomicfoundation/edr-linux-arm64-musl@npm:0.3.7":
+  version: 0.3.7
+  resolution: "@nomicfoundation/edr-linux-arm64-musl@npm:0.3.7"
   conditions: os=linux & cpu=arm64 & libc=musl
   languageName: node
   linkType: hard
 
-"@nomicfoundation/edr-linux-x64-gnu@npm:0.3.5":
-  version: 0.3.5
-  resolution: "@nomicfoundation/edr-linux-x64-gnu@npm:0.3.5"
+"@nomicfoundation/edr-linux-x64-gnu@npm:0.3.7":
+  version: 0.3.7
+  resolution: "@nomicfoundation/edr-linux-x64-gnu@npm:0.3.7"
   conditions: os=linux & cpu=x64 & libc=glibc
   languageName: node
   linkType: hard
 
-"@nomicfoundation/edr-linux-x64-musl@npm:0.3.5":
-  version: 0.3.5
-  resolution: "@nomicfoundation/edr-linux-x64-musl@npm:0.3.5"
+"@nomicfoundation/edr-linux-x64-musl@npm:0.3.7":
+  version: 0.3.7
+  resolution: "@nomicfoundation/edr-linux-x64-musl@npm:0.3.7"
   conditions: os=linux & cpu=x64 & libc=musl
   languageName: node
   linkType: hard
 
-"@nomicfoundation/edr-win32-x64-msvc@npm:0.3.5":
-  version: 0.3.5
-  resolution: "@nomicfoundation/edr-win32-x64-msvc@npm:0.3.5"
+"@nomicfoundation/edr-win32-x64-msvc@npm:0.3.7":
+  version: 0.3.7
+  resolution: "@nomicfoundation/edr-win32-x64-msvc@npm:0.3.7"
   conditions: os=win32 & cpu=x64
   languageName: node
   linkType: hard
 
 "@nomicfoundation/edr@npm:^0.3.5":
-  version: 0.3.5
-  resolution: "@nomicfoundation/edr@npm:0.3.5"
+  version: 0.3.7
+  resolution: "@nomicfoundation/edr@npm:0.3.7"
   dependencies:
-    "@nomicfoundation/edr-darwin-arm64": 0.3.5
-    "@nomicfoundation/edr-darwin-x64": 0.3.5
-    "@nomicfoundation/edr-linux-arm64-gnu": 0.3.5
-    "@nomicfoundation/edr-linux-arm64-musl": 0.3.5
-    "@nomicfoundation/edr-linux-x64-gnu": 0.3.5
-    "@nomicfoundation/edr-linux-x64-musl": 0.3.5
-    "@nomicfoundation/edr-win32-x64-msvc": 0.3.5
+    "@nomicfoundation/edr-darwin-arm64": 0.3.7
+    "@nomicfoundation/edr-darwin-x64": 0.3.7
+    "@nomicfoundation/edr-linux-arm64-gnu": 0.3.7
+    "@nomicfoundation/edr-linux-arm64-musl": 0.3.7
+    "@nomicfoundation/edr-linux-x64-gnu": 0.3.7
+    "@nomicfoundation/edr-linux-x64-musl": 0.3.7
+    "@nomicfoundation/edr-win32-x64-msvc": 0.3.7
   dependenciesMeta:
     "@nomicfoundation/edr-darwin-arm64":
       optional: true
@@ -1480,7 +1480,7 @@ __metadata:
       optional: true
     "@nomicfoundation/edr-win32-x64-msvc":
       optional: true
-  checksum: 6d083fa8f8a3601af93d1a6a25da0031029e8f3125a7f5629de439d1b3b8ba5a699defca59470c5f087ab89cacb7d27a3492ceeb648166caa89c6747bf669e2f
+  checksum: bad2d4c916c01dc219086def3a3c29d17834f5eb3a8898f3a79e4e4270c013c2417ff7d2eea1401bf6d1e436fcdbf5d7e4db6a2fdf76ed2495f6f900ab3e0273
   languageName: node
   linkType: hard
 
@@ -3391,9 +3391,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@wagmi/connectors@npm:4.2.0":
-  version: 4.2.0
-  resolution: "@wagmi/connectors@npm:4.2.0"
+"@wagmi/connectors@npm:4.3.0":
+  version: 4.3.0
+  resolution: "@wagmi/connectors@npm:4.3.0"
   dependencies:
     "@coinbase/wallet-sdk": 3.9.1
     "@metamask/sdk": 0.18.6
@@ -3402,19 +3402,19 @@ __metadata:
     "@walletconnect/ethereum-provider": 2.11.2
     "@walletconnect/modal": 2.6.2
   peerDependencies:
-    "@wagmi/core": 2.7.0
+    "@wagmi/core": 2.8.0
     typescript: ">=5.0.4"
     viem: 2.x
   peerDependenciesMeta:
     typescript:
       optional: true
-  checksum: bddbfc511485bb41de28611a51a691c80a4e3834d7e6c9b750fe5cad4f8cbc75924b7be70b37f293295089bdceabca4648ec5ccdea39a5bee675388880fecc48
+  checksum: ed2544276bb3692face2662dbce3342017d2d949b7f247ed34ba7680b2e99258652ea6f7ffa63a46b6c46afd6cfcb47e9b6d034bb6100cc8efb0b7aae60b7195
   languageName: node
   linkType: hard
 
-"@wagmi/core@npm:2.7.0":
-  version: 2.7.0
-  resolution: "@wagmi/core@npm:2.7.0"
+"@wagmi/core@npm:2.8.0":
+  version: 2.8.0
+  resolution: "@wagmi/core@npm:2.8.0"
   dependencies:
     eventemitter3: 5.0.1
     mipd: 0.0.5
@@ -3428,7 +3428,7 @@ __metadata:
       optional: true
     typescript:
       optional: true
-  checksum: 40f311030f3a9b74dce56372d4f33280f4fcf7ed89fff44e177ed884b7e66657d473a8b3b1e48d734a3367628e11da12d6e8dd13c741340b0b811ee23799f2c8
+  checksum: 5aaa377691de48977442e1d5dcf4e890fdfab8c818da5da471b5c3ef64586d4549ea1c2ab15459d2785a9d8afcf27e96fea88d487800c3e60fe1a442d0cb1f0d
   languageName: node
   linkType: hard
 
@@ -5042,9 +5042,9 @@ __metadata:
   linkType: hard
 
 "caniuse-lite@npm:^1.0.30001579, caniuse-lite@npm:^1.0.30001587, caniuse-lite@npm:^1.0.30001599":
-  version: 1.0.30001612
-  resolution: "caniuse-lite@npm:1.0.30001612"
-  checksum: 2b6ab6a19c72bdf8dccac824944e828a2a1fae52c6dfeb2d64ccecfd60d0466d2e5a392e996da2150d92850188a5034666dceed34a38d978177f6934e0bf106d
+  version: 1.0.30001614
+  resolution: "caniuse-lite@npm:1.0.30001614"
+  checksum: 1b695625f9a1b08584c3c229d4b8deaebb89e7901a2a2ffe599a6250c0a79fc61afc49c374c32a76dbf593a5dedac3229bb0140bbacd438276211bdd1d7c4958
   languageName: node
   linkType: hard
 
@@ -6177,9 +6177,9 @@ __metadata:
   linkType: hard
 
 "electron-to-chromium@npm:^1.4.668":
-  version: 1.4.750
-  resolution: "electron-to-chromium@npm:1.4.750"
-  checksum: d1a5f1e9942c90dea8e1f60555ea9c0053676a8c945a82b8acd040fcae9173cdaa0127a1a2f563c96aa3d64de1b970d4b8a3245303c614ea7a564fc389c5d8c1
+  version: 1.4.751
+  resolution: "electron-to-chromium@npm:1.4.751"
+  checksum: 7d8fce48b7b9997eee6bbef136044702f3fcf959a05a143e8818e4f36106024df86ed6e3aaaf83455cd1d83f5f180c8281c7cef645b798cd7a9424b2847ca15d
   languageName: node
   linkType: hard
 
@@ -6318,11 +6318,11 @@ __metadata:
   linkType: hard
 
 "envinfo@npm:^7.7.3":
-  version: 7.12.0
-  resolution: "envinfo@npm:7.12.0"
+  version: 7.13.0
+  resolution: "envinfo@npm:7.13.0"
   bin:
     envinfo: dist/cli.js
-  checksum: 4c83a55768cf8b7e553155c29e7fa7bbdb0fb2c1156208efc373fc030045c6aca5e8e642e96027d3eb0c752156922ea3fca6183d9e13f38507f0e02ec82c23a1
+  checksum: 822fc30f53bd0be67f0e25be96eb6a2562b8062f3058846bbd7ec471bd4b7835fca6436ee72c4029c8ae4a3d8f8cddbe2ee725b22291f015232d20a682bee732
   languageName: node
   linkType: hard
 
@@ -6426,9 +6426,9 @@ __metadata:
   linkType: hard
 
 "es-module-lexer@npm:^1.2.1":
-  version: 1.5.0
-  resolution: "es-module-lexer@npm:1.5.0"
-  checksum: adbe0772701e226b4b853f758fd89c0bbfe8357ab93babde7b1cdb4f88c3a31460c908cbe578817e241d116cc4fcf569f7c6f29c4fbfa0aadb0def90f1ad4dd2
+  version: 1.5.2
+  resolution: "es-module-lexer@npm:1.5.2"
+  checksum: 59c47109eca80b93dda2418337b4308c194c578704dc57d5aa54973b196e378d31e92f258e5525655b99b3de8a84dda2debb9646cddf6fe8830f1bfca95ee060
   languageName: node
   linkType: hard
 
@@ -8292,13 +8292,13 @@ __metadata:
   linkType: hard
 
 "hardhat-deploy-ethers@npm:^0.4.1":
-  version: 0.4.1
-  resolution: "hardhat-deploy-ethers@npm:0.4.1"
+  version: 0.4.2
+  resolution: "hardhat-deploy-ethers@npm:0.4.2"
   peerDependencies:
     "@nomicfoundation/hardhat-ethers": ^3.0.2
     hardhat: ^2.16.0
-    hardhat-deploy: ^0.11.34
-  checksum: 757b1d4ca7bdf37b87559e5aac03b6a751a06b11ba04bc23543fd794e86354872809e01089e85a21b63005b6068f7c61f8d62a6d8c1a8362ee234346b6c6f4e3
+    hardhat-deploy: ^0.12.0
+  checksum: 38c06f6b1d482cff92f31f1daf4cc4b6be943e1f62148e29cdddfc481d040470b9d6f233e0d61517fd02cc259f9f77ebd4512ea79624a893c72c90d70eff3f65
   languageName: node
   linkType: hard
 
@@ -9887,9 +9887,9 @@ __metadata:
   linkType: hard
 
 "lru-cache@npm:^10.0.1, lru-cache@npm:^10.2.0":
-  version: 10.2.1
-  resolution: "lru-cache@npm:10.2.1"
-  checksum: ae81586eaeb92389fc9a05790d7efd424a29334daa4e513196d6e138a069d0afad1738cfa67773f05b9cb8666fb076f8af88a1b5cc4c7e569202f18a0c032a35
+  version: 10.2.2
+  resolution: "lru-cache@npm:10.2.2"
+  checksum: 98e8fc93691c546f719a76103ef2bee5a3ac823955c755a47641ec41f8c7fafa1baeaba466937cc1cbfa9cfd47e03536d10e2db3158a64ad91ff3a58a32c893e
   languageName: node
   linkType: hard
 
@@ -12477,6 +12477,7 @@ __metadata:
     blessed-contrib: ^4.11.0
     husky: ^8.0.1
     lint-staged: ^13.0.3
+    systeminformation: ^5.22.7
   languageName: unknown
   linkType: soft
 
@@ -13346,6 +13347,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"systeminformation@npm:^5.22.7":
+  version: 5.22.7
+  resolution: "systeminformation@npm:5.22.7"
+  bin:
+    systeminformation: lib/cli.js
+  checksum: e3b4e29a15e7cc0b1cc2b31111240ec95dd8a1b1830cbf8a6649b1f288713e19700a3366cc3e547733481a05ae94ea261d3b3b9a6bc2e675bd45925cfacea777
+  conditions: (os=darwin | os=linux | os=win32 | os=freebsd | os=openbsd | os=netbsd | os=sunos | os=android)
+  languageName: node
+  linkType: hard
+
 "table-layout@npm:^1.0.2":
   version: 1.0.2
   resolution: "table-layout@npm:1.0.2"
@@ -13470,8 +13481,8 @@ __metadata:
   linkType: hard
 
 "terser@npm:^5.26.0":
-  version: 5.30.4
-  resolution: "terser@npm:5.30.4"
+  version: 5.31.0
+  resolution: "terser@npm:5.31.0"
   dependencies:
     "@jridgewell/source-map": ^0.3.3
     acorn: ^8.8.2
@@ -13479,7 +13490,7 @@ __metadata:
     source-map-support: ~0.5.20
   bin:
     terser: bin/terser
-  checksum: 4e33a98d451a1175c83f668cb1dd34e1b4573890ba3081e0389e71e6552ca501ebfda5b15cddeab33585f7b4c13f2e7ad9ba9613655b9e36bc919fde48ba2dcd
+  checksum: 48f14229618866bba8a9464e9d0e7fdcb6b6488b3a6c4690fcf4d48df65bf45959d5ae8c02f1a0b3f3dd035a9ae340b715e1e547645b112dc3963daa3564699a
   languageName: node
   linkType: hard
 
@@ -13879,9 +13890,9 @@ __metadata:
   linkType: hard
 
 "type-fest@npm:^4.6.0":
-  version: 4.17.0
-  resolution: "type-fest@npm:4.17.0"
-  checksum: 0d571438a0efa5a0f7db9fc70ea51b8eb38ff5cff36b2b16b76d2214b55773d92c671a01b79b715b46acb5ec6becb24e59441d1f44bbf4abc585e7722b72e4d2
+  version: 4.18.0
+  resolution: "type-fest@npm:4.18.0"
+  checksum: 137655855a452966ad2f1669bdd620774c586897e931989490fba31a5cd5eee2617b4ff44fbc45fd6b72752b7d271562ebd7da0416545091c33ce2ae4f406d70
   languageName: node
   linkType: hard
 
@@ -14479,11 +14490,11 @@ __metadata:
   linkType: hard
 
 "wagmi@npm:^2.5.12":
-  version: 2.6.0
-  resolution: "wagmi@npm:2.6.0"
+  version: 2.7.0
+  resolution: "wagmi@npm:2.7.0"
   dependencies:
-    "@wagmi/connectors": 4.2.0
-    "@wagmi/core": 2.7.0
+    "@wagmi/connectors": 4.3.0
+    "@wagmi/core": 2.8.0
     use-sync-external-store: 1.2.0
   peerDependencies:
     "@tanstack/react-query": ">=5.0.0"
@@ -14493,7 +14504,7 @@ __metadata:
   peerDependenciesMeta:
     typescript:
       optional: true
-  checksum: 96c17e12fe25ec3d14946af8907114c094c12d743eefe43553233aa43ca7db19cd8be91ca27078af8431f0f627c9cacc8f16d286999741fd476919a1dfec51ca
+  checksum: fc2f6ae10bf71869a4da62fea1e5c1c5ecd897fc0c5ff6105114ce3ba5fde07dd8aa4dbe66532ec84189bfbb3bff4aa5e92db1827f7238ac2d30a404fb347f04
   languageName: node
   linkType: hard
 
@@ -15019,11 +15030,11 @@ __metadata:
   linkType: hard
 
 "yaml@npm:^2.3.4":
-  version: 2.4.1
-  resolution: "yaml@npm:2.4.1"
+  version: 2.4.2
+  resolution: "yaml@npm:2.4.2"
   bin:
     yaml: bin.mjs
-  checksum: 4c391d07a5d5e935e058babb71026c9cdc9a6fd889e35dd91b53cfb0a12691b67c6c5c740858e71345fef18cd9c13c554a6dda9196f59820d769d94041badb0b
+  checksum: 90dda4485de04367251face9abb5c36927c94e44078f4e958e6468a07e74e7e92f89be20fc49860b6268c51ee5a5fc79ef89197d3f874bf24ef8921cc4ba9013
   languageName: node
   linkType: hard
 

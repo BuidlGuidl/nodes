@@ -4,6 +4,7 @@ const { execSync, spawn } = require("child_process");
 const os = require("os");
 const fs = require("fs");
 const path = require("path");
+const si = require("systeminformation");
 
 // Set default values
 let executionClient = "geth";
@@ -55,6 +56,80 @@ args.forEach((val, index) => {
   }
 });
 
+function checkMacLinuxPrereqs() {
+  try {
+    execSync(`command -v brew`, { stdio: "ignore" });
+    const version = execSync(`brew -v`).toString().trim();
+    color("36", `Homebrew is already installed. Version:\n${version}`);
+  } catch {
+    console.log(`Please install Homebrew (https://brew.sh/).`);
+    process.exit(0);
+  }
+
+  try {
+    execSync(`command -v openssl`, { stdio: "ignore" });
+    const version = execSync(`openssl -v`).toString().trim();
+    color("36", `openssl is already installed. Version:\n${version}`);
+  } catch {
+    console.log(`Installing openssl.`);
+    execSync("brew install openssl", { stdio: "inherit" });
+  }
+}
+
+function createJwtSecret(jwtDir) {
+  if (!fs.existsSync(jwtDir)) {
+    console.log(`Creating '${jwtDir}'`);
+    fs.mkdirSync(jwtDir, { recursive: true });
+  }
+
+  if (!fs.existsSync(`${jwtDir}/jwt.hex`)) {
+    execSync(`cd ${jwtDir} && openssl rand -hex 32 > jwt.hex`, { stdio: "inherit" });
+  }
+}
+
+function installMacLinuxExecutionClient(executionClient) {
+  try {
+    execSync(`command -v ${executionClient}`, { stdio: "ignore" });
+    const version = execSync(`${executionClient} -v`).toString().trim();
+    color("36", `${executionClient} is already installed. Version:\n${version}`);
+  } catch {
+    console.log(`Installing ${executionClient}.`);
+    if (executionClient === "geth") {
+      execSync("brew tap ethereum/ethereum", { stdio: "inherit" });
+      execSync("brew install ethereum", { stdio: "inherit" });
+    } else if (executionClient === "reth") {
+      execSync("brew install paradigmxyz/brew/reth", { stdio: "inherit" });
+    }
+  }
+}
+
+function installMacLinuxConsensusClient(consensusClient) {
+  if (consensusClient === "prysm") {
+    const prysmDir = path.join(os.homedir(), "bgnode", "prysm");
+    const prysmScript = path.join(prysmDir, "prysm.sh");
+    if (!fs.existsSync(prysmScript)) {
+      console.log("Installing Prysm.");
+      if (!fs.existsSync(prysmDir)) {
+        console.log(`Creating '${prysmDir}'`);
+        fs.mkdirSync(prysmDir, { recursive: true });
+      }
+      execSync(`curl https://raw.githubusercontent.com/prysmaticlabs/prysm/master/prysm.sh --output ${prysmScript}`);
+      execSync(`chmod +x ${prysmScript}`);
+    } else {
+      color("36", "Prysm is already installed.");
+    }
+  } else if (consensusClient === "lighthouse") {
+    try {
+      execSync("command -v lighthouse", { stdio: "ignore" });
+      const version = execSync("lighthouse --version").toString().trim();
+      color("36", `Lighthouse is already installed. Version:\n${version}`);
+    } catch {
+      console.log("Installing Lighthouse.");
+      execSync("brew install lighthouse", { stdio: "inherit" });
+    }
+  }
+}
+
 function startChain(executionClient, consensusClient, jwtDir) {
   // Create a screen object
   const screen = blessed.screen();
@@ -99,15 +174,14 @@ function startChain(executionClient, consensusClient, jwtDir) {
       `${jwtDir}/jwt.hex`,
     ]);
   } else if (executionClient === "reth") {
-    execution = spawn("geth", [
-      "--mainnet",
+    execution = spawn("reth", [
+      "node",
+      "--full",
       "--http",
-      "--http.api",
-      "eth,net,engine,admin",
-      "--http.addr",
-      "0.0.0.0",
-      "--syncmode",
-      "full",
+      "--authrpc.addr",
+      "127.0.0.1",
+      "--authrpc.port",
+      "8551",
       "--authrpc.jwtsecret",
       `${jwtDir}/jwt.hex`,
     ]);
@@ -127,18 +201,24 @@ function startChain(executionClient, consensusClient, jwtDir) {
   if (consensusClient === "prysm") {
     consensus = spawn(`${prysmDir}/prysm.sh`, [
       "beacon-chain",
-      "--execution-endpoint=http://localhost:8551",
+      "--execution-endpoint",
+      "http://localhost:8551",
       "--mainnet",
       "--jwt-secret",
       `${jwtDir}/jwt.hex`,
     ]);
   } else if (consensusClient === "lighthouse") {
-    consensus = spawn(`${prysmDir}/prysm.sh`, [
-      "beacon-chain",
-      "--execution-endpoint=http://localhost:8551",
-      "--mainnet",
-      "--jwt-secret",
+    consensus = spawn("lighthouse", [
+      "bn",
+      "--network",
+      "mainnet",
+      "--execution-endpoint",
+      "http://localhost:8551",
+      "--execution-jwt",
       `${jwtDir}/jwt.hex`,
+      "--checkpoint-sync-url",
+      "https://mainnet.checkpoint.sigp.io",
+      "--disable-deposit-contract-sync",
     ]);
   }
 
@@ -162,6 +242,7 @@ function startChain(executionClient, consensusClient, jwtDir) {
   // Quit on Escape, q, or Control-C.
   screen.key(["escape", "q", "C-c"], function (ch, key) {
     return process.exit(0);
+    // TODO: Make sure client processes terminate
   });
 
   screen.render();
@@ -171,68 +252,19 @@ console.log(`Execution client selected: ${executionClient}`);
 console.log(`Consensus client selected: ${consensusClient}\n`);
 
 const jwtDir = path.join(os.homedir(), "bgnode", "jwt");
-if (!fs.existsSync(jwtDir)) {
-  console.log(`Creating '${jwtDir}'`);
-  fs.mkdirSync(jwtDir, { recursive: true });
-}
+createJwtSecret(jwtDir);
 
 if (["darwin", "linux"].includes(os.platform())) {
-  try {
-    execSync(`command -v ${executionClient}`, { stdio: "ignore" });
-    const version = execSync(`${executionClient} -v`).toString().trim();
-    color("36", `${executionClient} is already installed. Version:\n${version}`);
-  } catch {
-    console.log(`Installing ${executionClient}.`);
-    if (executionClient === "geth") {
-      execSync("brew tap ethereum/ethereum", { stdio: "inherit" });
-      execSync("brew install ethereum", { stdio: "inherit" });
-    } else if (executionClient === "reth") {
-      execSync("brew install paradigmxyz/brew/reth", { stdio: "inherit" });
-    }
-  }
+  checkMacLinuxPrereqs();
+  installMacLinuxExecutionClient(executionClient);
+  installMacLinuxConsensusClient(consensusClient);
 
-  try {
-    execSync("command -v gpg", { stdio: "ignore" });
-  } catch {
-    console.log("Installing gpg (required for jwt.hex creation).");
-    execSync("brew install gpg", { stdio: "inherit" });
-  }
-
-  if (consensusClient === "prysm") {
-    const prysmDir = path.join(os.homedir(), "bgnode", "prysm");
-    const prysmScript = path.join(prysmDir, "prysm.sh");
-    if (!fs.existsSync(prysmScript)) {
-      console.log("Installing Prysm.");
-      if (!fs.existsSync(prysmDir)) {
-        console.log(`Creating '${prysmDir}'`);
-        fs.mkdirSync(prysmDir, { recursive: true });
-      }
-      execSync(`curl https://raw.githubusercontent.com/prysmaticlabs/prysm/master/prysm.sh --output ${prysmScript}`);
-      execSync(`chmod +x ${prysmScript}`);
-      console.log("Creating JWT secret.");
-      execSync(
-        `${prysmScript} beacon-chain generate-auth-secret`,
-        {
-          cwd: prysmDir,
-        },
-        {
-          stdio: "inherit",
-        },
-      );
-      fs.renameSync(path.join(prysmDir, "jwt.hex"), path.join(jwtDir, "jwt.hex"));
-    } else {
-      color("36", "Prysm is already installed.");
-    }
-  } else if (consensusClient === "lighthouse") {
-    try {
-      execSync("command -v lighthouse", { stdio: "ignore" });
-      const version = execSync("lighthouse --version").toString().trim();
-      color("36", `Lighthouse is already installed. Version:\n${version}`);
-    } catch {
-      console.log("Installing Lighthouse.");
-      execSync("brew install lighthouse", { stdio: "inherit" });
-    }
-  }
+  // try {
+  //   execSync("command -v gpg", { stdio: "ignore" });
+  // } catch {
+  //   console.log("Installing gpg (required for jwt.hex creation).");
+  //   execSync("brew install gpg", { stdio: "inherit" });
+  // }
 } else if (os.platform() === "win32") {
   try {
     const output = execSync("git --version", { encoding: "utf-8" }); // ensures the output is a string
@@ -296,9 +328,9 @@ if (["darwin", "linux"].includes(os.platform())) {
         { stdio: "inherit" },
       );
       execSync("reg add HKCU\\Console /v VirtualTerminalLevel /t REG_DWORD /d 1", { stdio: "inherit" });
-      console.log("Creating JWT secret.");
-      execSync(`cd ${prysmDir} && prysm.bat beacon-chain generate-auth-secret`, { stdio: "inherit" });
-      fs.renameSync(path.join(prysmDir, "jwt.hex"), path.join(jwtDir, "jwt.hex"));
+      // console.log("Creating JWT secret.");
+      // execSync(`cd ${prysmDir} && prysm.bat beacon-chain generate-auth-secret`, { stdio: "inherit" });
+      // fs.renameSync(path.join(prysmDir, "jwt.hex"), path.join(jwtDir, "jwt.hex"));
     } else {
       color("36", "Prysm is already installed.");
     }
@@ -319,12 +351,6 @@ if (["darwin", "linux"].includes(os.platform())) {
         stdio: "inherit",
       });
       execSync(`cd ${lighthouseDir} && del lighthouse-v5.1.3-x86_64-windows.tar.gz`, { stdio: "inherit" });
-      // console.log("Creating JWT secret.");
-      // execSync( `cd ${lighthouseDir} && prysm.bat beacon-chain generate-auth-secret`, { stdio: "inherit", } );
-      // fs.renameSync(
-      //   path.join(lighthouseDir, "jwt.hex"),
-      //   path.join(jwtDir, "jwt.hex")
-      // );
     } else {
       color("36", "Lighthouse is already installed.");
     }
