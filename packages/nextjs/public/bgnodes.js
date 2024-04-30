@@ -1,6 +1,6 @@
 const blessed = require("blessed");
 const contrib = require("blessed-contrib");
-const { execSync, spawn } = require("child_process");
+const { exec, execSync, spawn } = require("child_process");
 const os = require("os");
 const fs = require("fs");
 const path = require("path");
@@ -76,6 +76,33 @@ function checkMacLinuxPrereqs() {
   }
 }
 
+function checkWindowsPrereqs() {
+  try {
+    const version = execSync(`choco -v`).toString().trim();
+    color("36", `Chocolatey is already installed. Version:\n${version}`);
+  } catch {
+    console.log(`Please install Chocolatey (https://community.chocolatey.org/).`);
+    process.exit(0);
+  }
+
+  try {
+    const version = execSync(`openssl -v`).toString().trim();
+    color("36", `Openssl is already installed. Version:\n${version}`);
+  } catch {
+    console.log(`Please install openssl`);
+    console.log(`Open Command Prompt as Administrator and run 'choco install openssl'`);
+    process.exit(0);
+  }
+
+  // try {
+  //   const output = execSync("git --version", { encoding: "utf-8" }); // ensures the output is a string
+  //   console.log("Git is installed:", output);
+  // } catch (error) {
+  //   console.error("Please install Git (https://git-scm.com/downloads).");
+  //   process.exit(0);
+  // }
+}
+
 function createJwtSecret(jwtDir) {
   if (!fs.existsSync(jwtDir)) {
     console.log(`Creating '${jwtDir}'`);
@@ -103,176 +130,7 @@ function installMacLinuxExecutionClient(executionClient) {
   }
 }
 
-function installMacLinuxConsensusClient(consensusClient) {
-  if (consensusClient === "prysm") {
-    const prysmDir = path.join(os.homedir(), "bgnode", "prysm");
-    const prysmScript = path.join(prysmDir, "prysm.sh");
-    if (!fs.existsSync(prysmScript)) {
-      console.log("Installing Prysm.");
-      if (!fs.existsSync(prysmDir)) {
-        console.log(`Creating '${prysmDir}'`);
-        fs.mkdirSync(prysmDir, { recursive: true });
-      }
-      execSync(`curl https://raw.githubusercontent.com/prysmaticlabs/prysm/master/prysm.sh --output ${prysmScript}`);
-      execSync(`chmod +x ${prysmScript}`);
-    } else {
-      color("36", "Prysm is already installed.");
-    }
-  } else if (consensusClient === "lighthouse") {
-    try {
-      execSync("command -v lighthouse", { stdio: "ignore" });
-      const version = execSync("lighthouse --version").toString().trim();
-      color("36", `Lighthouse is already installed. Version:\n${version}`);
-    } catch {
-      console.log("Installing Lighthouse.");
-      execSync("brew install lighthouse", { stdio: "inherit" });
-    }
-  }
-}
-
-function startChain(executionClient, consensusClient, jwtDir) {
-  // Create a screen object
-  const screen = blessed.screen();
-
-  console.log(executionClient);
-
-  // Create two log boxes
-  const executionLog = contrib.log({
-    fg: "green",
-    selectedFg: "green",
-    label: "Geth Logs",
-    top: "0%",
-    height: "50%",
-    width: "100%",
-  });
-
-  const consensusLog = contrib.log({
-    fg: "yellow",
-    selectedFg: "yellow",
-    label: "Prysm Logs",
-    top: "50%",
-    height: "50%",
-    width: "100%",
-  });
-
-  screen.append(executionLog);
-  screen.append(consensusLog);
-  screen.render();
-
-  let execution;
-  if (executionClient === "geth") {
-    execution = spawn("geth", [
-      "--mainnet",
-      "--http",
-      "--http.api",
-      "eth,net,engine,admin",
-      "--http.addr",
-      "0.0.0.0",
-      "--syncmode",
-      "full",
-      "--authrpc.jwtsecret",
-      `${jwtDir}/jwt.hex`,
-    ]);
-  } else if (executionClient === "reth") {
-    execution = spawn("reth", [
-      "node",
-      "--full",
-      "--http",
-      "--authrpc.addr",
-      "127.0.0.1",
-      "--authrpc.port",
-      "8551",
-      "--authrpc.jwtsecret",
-      `${jwtDir}/jwt.hex`,
-    ]);
-  }
-
-  execution.stdout.on("data", data => {
-    executionLog.log(data.toString());
-  });
-
-  execution.stderr.on("data", data => {
-    executionLog.log(data.toString());
-  });
-
-  const prysmDir = path.join(os.homedir(), "bgnode", "prysm");
-
-  let consensus;
-  if (consensusClient === "prysm") {
-    consensus = spawn(`${prysmDir}/prysm.sh`, [
-      "beacon-chain",
-      "--execution-endpoint",
-      "http://localhost:8551",
-      "--mainnet",
-      "--jwt-secret",
-      `${jwtDir}/jwt.hex`,
-    ]);
-  } else if (consensusClient === "lighthouse") {
-    consensus = spawn("lighthouse", [
-      "bn",
-      "--network",
-      "mainnet",
-      "--execution-endpoint",
-      "http://localhost:8551",
-      "--execution-jwt",
-      `${jwtDir}/jwt.hex`,
-      "--checkpoint-sync-url",
-      "https://mainnet.checkpoint.sigp.io",
-      "--disable-deposit-contract-sync",
-    ]);
-  }
-
-  consensus.stdout.on("data", data => {
-    consensusLog.log(data.toString());
-  });
-
-  consensus.stderr.on("data", data => {
-    consensusLog.log(data.toString());
-  });
-
-  // Handle close
-  execution.on("close", code => {
-    executionLog.log(`Geth process exited with code ${code}`);
-  });
-
-  consensus.on("close", code => {
-    consensusLog.log(`Prysm process exited with code ${code}`);
-  });
-
-  // Quit on Escape, q, or Control-C.
-  screen.key(["escape", "q", "C-c"], function (ch, key) {
-    return process.exit(0);
-    // TODO: Make sure client processes terminate
-  });
-
-  screen.render();
-}
-
-console.log(`Execution client selected: ${executionClient}`);
-console.log(`Consensus client selected: ${consensusClient}\n`);
-
-const jwtDir = path.join(os.homedir(), "bgnode", "jwt");
-createJwtSecret(jwtDir);
-
-if (["darwin", "linux"].includes(os.platform())) {
-  checkMacLinuxPrereqs();
-  installMacLinuxExecutionClient(executionClient);
-  installMacLinuxConsensusClient(consensusClient);
-
-  // try {
-  //   execSync("command -v gpg", { stdio: "ignore" });
-  // } catch {
-  //   console.log("Installing gpg (required for jwt.hex creation).");
-  //   execSync("brew install gpg", { stdio: "inherit" });
-  // }
-} else if (os.platform() === "win32") {
-  try {
-    const output = execSync("git --version", { encoding: "utf-8" }); // ensures the output is a string
-    console.log("Git is installed:", output);
-  } catch (error) {
-    console.error("Please install Git (https://git-scm.com/downloads).");
-  }
-
+function installWindowsExecutionClient(executionClient) {
   if (executionClient === "geth") {
     const gethDir = path.join(os.homedir(), "bgnode", "geth");
     const gethScript = path.join(gethDir, "geth.exe");
@@ -313,7 +171,36 @@ if (["darwin", "linux"].includes(os.platform())) {
       color("36", "Reth is already installed.");
     }
   }
+}
 
+function installMacLinuxConsensusClient(consensusClient) {
+  if (consensusClient === "prysm") {
+    const prysmDir = path.join(os.homedir(), "bgnode", "prysm");
+    const prysmScript = path.join(prysmDir, "prysm.sh");
+    if (!fs.existsSync(prysmScript)) {
+      console.log("Installing Prysm.");
+      if (!fs.existsSync(prysmDir)) {
+        console.log(`Creating '${prysmDir}'`);
+        fs.mkdirSync(prysmDir, { recursive: true });
+      }
+      execSync(`curl https://raw.githubusercontent.com/prysmaticlabs/prysm/master/prysm.sh --output ${prysmScript}`);
+      execSync(`chmod +x ${prysmScript}`);
+    } else {
+      color("36", "Prysm is already installed.");
+    }
+  } else if (consensusClient === "lighthouse") {
+    try {
+      execSync("command -v lighthouse", { stdio: "ignore" });
+      const version = execSync("lighthouse --version").toString().trim();
+      color("36", `Lighthouse is already installed. Version:\n${version}`);
+    } catch {
+      console.log("Installing Lighthouse.");
+      execSync("brew install lighthouse", { stdio: "inherit" });
+    }
+  }
+}
+
+function installWindowsConsensusClient(consensusClient) {
   if (consensusClient === "prysm") {
     const prysmDir = path.join(os.homedir(), "bgnode", "prysm");
     const prysmScript = path.join(prysmDir, "prysm.bat");
@@ -357,4 +244,241 @@ if (["darwin", "linux"].includes(os.platform())) {
   }
 }
 
-startChain(executionClient, consensusClient, jwtDir);
+function startChain(executionClient, consensusClient, jwtDir, platform) {
+  // Create a screen object
+  const screen = blessed.screen();
+
+  console.log(executionClient);
+
+  // Create two log boxes
+  const executionLog = contrib.log({
+    fg: "green",
+    selectedFg: "green",
+    label: "Geth Logs",
+    top: "0%",
+    height: "50%",
+    width: "100%",
+  });
+
+  const consensusLog = contrib.log({
+    fg: "yellow",
+    selectedFg: "yellow",
+    label: "Prysm Logs",
+    top: "50%",
+    height: "50%",
+    width: "100%",
+  });
+
+  screen.append(executionLog);
+  screen.append(consensusLog);
+  screen.render();
+
+  let execution;
+  if (executionClient === "geth") {
+    let gethCommand;
+    if (["darwin", "linux"].includes(platform)) {
+      gethCommand = "geth";
+    } else if (platform === "win32") {
+      gethCommand = path.join(os.homedir(), "bgnode", "geth", "geth.exe");
+    }
+    execution = spawn(`${gethCommand}`, [
+      "--mainnet",
+      "--http",
+      "--http.api",
+      "eth,net,engine,admin",
+      "--http.addr",
+      "0.0.0.0",
+      "--syncmode",
+      "full",
+      "--authrpc.jwtsecret",
+      `${jwtDir}/jwt.hex`,
+    ]);
+  } else if (executionClient === "reth") {
+    let rethCommand;
+    if (["darwin", "linux"].includes(platform)) {
+      rethCommand = "reth";
+    } else if (platform === "win32") {
+      rethCommand = path.join(os.homedir(), "bgnode", "reth", "reth.exe");
+    }
+    execution = spawn(`${rethCommand}`, [
+      "node",
+      "--full",
+      "--http",
+      "--authrpc.addr",
+      "127.0.0.1",
+      "--authrpc.port",
+      "8551",
+      "--authrpc.jwtsecret",
+      `${jwtDir}/jwt.hex`,
+    ]);
+  }
+
+  execution.stdout.on("data", data => {
+    executionLog.log(data.toString());
+  });
+
+  execution.stderr.on("data", data => {
+    executionLog.log(data.toString());
+  });
+
+  let consensus;
+  if (consensusClient === "prysm") {
+    let prysmCommand;
+    if (["darwin", "linux"].includes(platform)) {
+      prysmCommand = path.join(os.homedir(), "bgnode", "prysm", "prysm.sh");
+    } else if (platform === "win32") {
+      prysmCommand = path.join(os.homedir(), "bgnode", "prysm", "prysm.bat");
+    }
+    consensus = spawn(`${prysmCommand}`, [
+      "beacon-chain",
+      "--execution-endpoint",
+      "http://localhost:8551",
+      "--mainnet",
+      "--jwt-secret",
+      `${jwtDir}/jwt.hex`,
+    ]);
+  } else if (consensusClient === "lighthouse") {
+    let lighthouseCommand;
+    if (["darwin", "linux"].includes(platform)) {
+      lighthouseCommand = "lighthouse";
+    } else if (platform === "win32") {
+      lighthouseCommand = path.join(os.homedir(), "bgnode", "lighthouse", "lighthouse.exe");
+    }
+    consensus = spawn(`${lighthouseCommand}`, [
+      "bn",
+      "--network",
+      "mainnet",
+      "--execution-endpoint",
+      "http://localhost:8551",
+      "--execution-jwt",
+      `${jwtDir}/jwt.hex`,
+      "--checkpoint-sync-url",
+      "https://mainnet.checkpoint.sigp.io",
+      "--disable-deposit-contract-sync",
+    ]);
+  }
+
+  consensus.stdout.on("data", data => {
+    consensusLog.log(data.toString());
+  });
+
+  consensus.stderr.on("data", data => {
+    consensusLog.log(data.toString());
+  });
+
+  // Handle close
+  execution.on("close", code => {
+    executionLog.log(`Geth process exited with code ${code}`);
+  });
+
+  consensus.on("close", code => {
+    consensusLog.log(`Prysm process exited with code ${code}`);
+  });
+
+  // Quit on Escape, q, or Control-C.
+  screen.key(["escape", "q", "C-c"], function (ch, key) {
+    return process.exit(0);
+    // TODO: Make sure client processes terminate
+  });
+
+  screen.render();
+}
+
+// function startChain(executionClient, consensusClient, jwtDir, platform) {
+//   let execution;
+//   if (executionClient === "geth") {
+//     let gethCommand;
+//     if (["darwin", "linux"].includes(platform)) {
+//       gethCommand = "geth";
+//     } else if (platform === "win32") {
+//       gethCommand = path.join(os.homedir(), "bgnode", "geth", "geth.exe");
+//     }
+//     execution = spawn(`${gethCommand}`, [
+//       "--mainnet",
+//       "--http",
+//       "--http.api",
+//       "eth,net,engine,admin",
+//       "--http.addr",
+//       "0.0.0.0",
+//       "--syncmode",
+//       "full",
+//       "--authrpc.jwtsecret",
+//       `${jwtDir}/jwt.hex`,
+//     ]);
+    
+//   } else if (executionClient === "reth") {
+//     let rethCommand;
+//     if (["darwin", "linux"].includes(platform)) {
+//       rethCommand = "reth";
+//     } else if (platform === "win32") {
+//       rethCommand = path.join(os.homedir(), "bgnode", "reth", "reth.exe");
+//     }
+//     execution = spawn(`${rethCommand}`, [
+//       "node",
+//       "--full",
+//       "--http",
+//       "--authrpc.addr",
+//       "127.0.0.1",
+//       "--authrpc.port",
+//       "8551",
+//       "--authrpc.jwtsecret",
+//       `${jwtDir}/jwt.hex`,
+//     ]);
+//   }
+
+//   let consensus;
+//   if (consensusClient === "prysm") {
+//     let prysmCommand;
+//     if (["darwin", "linux"].includes(platform)) {
+//       prysmCommand = path.join(os.homedir(), "bgnode", "prysm", "prysm.sh");
+//     } else if (platform === "win32") {
+//       prysmCommand = path.join(os.homedir(), "bgnode", "prysm", "prysm.bat");
+//     }
+//     consensus = spawn(`${prysmCommand}`, [
+//       "beacon-chain",
+//       "--execution-endpoint",
+//       "http://localhost:8551",
+//       "--mainnet",
+//       "--jwt-secret",
+//       `${jwtDir}/jwt.hex`,
+//     ]);
+//   } else if (consensusClient === "lighthouse") {
+//     let lighthouseCommand;
+//     if (["darwin", "linux"].includes(platform)) {
+//       lighthouseCommand = "lighthouse";
+//     } else if (platform === "win32") {
+//       lighthouseCommand = path.join(os.homedir(), "bgnode", "lighthouse", "lighthouse.exe");
+//     }
+//     consensus = spawn(`${lighthouseCommand}`, [
+//       "bn",
+//       "--network",
+//       "mainnet",
+//       "--execution-endpoint",
+//       "http://localhost:8551",
+//       "--execution-jwt",
+//       `${jwtDir}/jwt.hex`,
+//       "--checkpoint-sync-url",
+//       "https://mainnet.checkpoint.sigp.io",
+//       "--disable-deposit-contract-sync",
+//     ]);
+//   }
+// }
+
+console.log(`Execution client selected: ${executionClient}`);
+console.log(`Consensus client selected: ${consensusClient}\n`);
+
+const jwtDir = path.join(os.homedir(), "bgnode", "jwt");
+createJwtSecret(jwtDir);
+
+const platform = os.platform();
+
+if (["darwin", "linux"].includes(platform)) {
+  checkMacLinuxPrereqs();
+  installMacLinuxExecutionClient(executionClient);
+  installMacLinuxConsensusClient(consensusClient);
+} else if (platform === "win32") {
+  checkWindowsPrereqs();
+  installWindowsExecutionClient(executionClient);
+  installWindowsConsensusClient(consensusClient);
+}
+startChain(executionClient, consensusClient, jwtDir, platform);
