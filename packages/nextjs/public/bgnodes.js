@@ -405,7 +405,7 @@ function startChain(executionClient, consensusClient, jwtDir, platform) {
 //       "--authrpc.jwtsecret",
 //       `${jwtDir}/jwt.hex`,
 //     ]);
-    
+
 //   } else if (executionClient === "reth") {
 //     let rethCommand;
 //     if (["darwin", "linux"].includes(platform)) {
