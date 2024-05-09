@@ -153,7 +153,7 @@ function createJwtSecret(jwtDir) {
 function installMacLinuxExecutionClient(executionClient) {
   try {
     execSync(`command -v ${executionClient}`, { stdio: "ignore" });
-    const version = execSync(`${executionClient} -v`).toString().trim();
+    const version = execSync(`${executionClient} --version`).toString().trim();
     color("36", `${executionClient} is already installed. Version:\n${version}`);
   } catch {
     console.log(`Installing ${executionClient}.`);
