@@ -66,8 +66,8 @@ function checkMacLinuxPrereqs(platform) {
       const version = execSync(`curl --version`).toString().trim();
       color("36", `Curl is already installed. Version:\n${version}`);
     } catch {
-      console.log(`Please install Curl by running this command:`);
-      color("4", `sudo apt-get install curl`);
+      color("1", `\nPlease install Curl by running this command:`);
+      color("1", `sudo apt-get install curl`);
       process.exit(0);
     }
   }
@@ -92,7 +92,7 @@ function checkMacLinuxPrereqs(platform) {
     const version = execSync(`brew -v`).toString().trim();
     color("36", `Homebrew is already installed. Version:\n${version}`);
   } catch {
-    console.log(`Please install Homebrew (https://brew.sh/).`);
+    color("1", `\nPlease install Homebrew (https://brew.sh/).`);
     process.exit(0);
   }
 
@@ -101,7 +101,7 @@ function checkMacLinuxPrereqs(platform) {
     const version = execSync(`openssl -v`).toString().trim();
     color("36", `openssl is already installed. Version:\n${version}`);
   } catch {
-    console.log(`Installing openssl.`);
+    console.log(`\nInstalling openssl.`);
     execSync("brew install openssl", { stdio: "inherit" });
   }
   // TODO: Check for yarn
@@ -114,7 +114,7 @@ function checkWindowsPrereqs() {
     const version = execSync(`choco -v`).toString().trim();
     color("36", `Chocolatey is already installed. Version:\n${version}`);
   } catch {
-    console.log(`Please install Chocolatey (https://community.chocolatey.org/).`);
+    color("1", `\nPlease install Chocolatey (https://community.chocolatey.org/).`);
     process.exit(0);
   }
 
@@ -122,8 +122,8 @@ function checkWindowsPrereqs() {
     const version = execSync(`openssl -v`).toString().trim();
     color("36", `Openssl is already installed. Version:\n${version}`);
   } catch {
-    console.log(`Please install openssl`);
-    console.log(`Open Command Prompt as Administrator and run 'choco install openssl'`);
+    color("1", `\nPlease install openssl`);
+    color("1", `Open Command Prompt as Administrator and run 'choco install openssl'`);
     process.exit(0);
   }
   // TODO: Check for yarn
