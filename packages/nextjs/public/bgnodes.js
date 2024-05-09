@@ -58,27 +58,34 @@ args.forEach((val, index) => {
 });
 
 function checkMacLinuxPrereqs(platform) {
+  // All these are required to be installed for linux: node, npm, yarn
+
   if (platform === "linux") {
     try {
       execSync(`command -v curl`, { stdio: "ignore" });
-      const version = execSync(`curl -v`).toString().trim();
+      const version = execSync(`curl --version`).toString().trim();
       color("36", `Curl is already installed. Version:\n${version}`);
     } catch {
       console.log(`Please install Curl by running this command:`);
-      color("4", `apt-get install curl`);
+      color("4", `sudo apt-get install curl`);
       process.exit(0);
     }
   }
 
-  try {
-    execSync(`command -v git`, { stdio: "ignore" });
-    const version = execSync(`git -v`).toString().trim();
-    color("36", `git is already installed. Version:\n${version}`);
-  } catch {
-    console.log(`Please install git by running this command:`);
-    color("4", `apt-get install git`);
-    process.exit(0);
-  }
+  // Git will have to already be installed by now
+  // try {
+  //   execSync(`command -v git`, { stdio: "ignore" });
+  //   const version = execSync(`git --version`).toString().trim();
+  //   color("36", `git is already installed. Version:\n${version}`);
+  // } catch {
+  //   console.log(`Please install git by running this command:`);
+  //   if (platform === "linux") {
+  //     color("4", `sudo apt-get install git`);
+  //   } else {
+  //     color("4", `sudo apt-get install git`);
+  //   }
+  //   process.exit(0);
+  // }
 
   try {
     execSync(`command -v brew`, { stdio: "ignore" });
