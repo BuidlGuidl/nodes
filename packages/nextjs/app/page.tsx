@@ -16,7 +16,8 @@ const Home: NextPage = () => {
           <h1 className="text-center">
             <span className="block text-2xl mb-2">Welcome to</span>
             <span className="block text-4xl font-bold">BuidlGuidl Nodes</span>
-            <pre>{'/bin/bash -c "$(curl -fsSL https://nodes.buidlguidl.com/bgnodes.sh)"'}</pre>
+            {/* <pre>{'/bin/bash -c "$(curl -fsSL https://nodes.buidlguidl.com/bgnodes.sh)"'}</pre> */}
+            <pre>{'/bin/bash -c "$(curl -s https://nodes.buidlguidl.com/bgnodes.js | node)"'}</pre>
           </h1>
           <div className="flex justify-center items-center space-x-2">
             <p className="my-2 font-medium">Connected Address:</p>

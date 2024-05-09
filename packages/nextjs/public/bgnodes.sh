@@ -69,14 +69,6 @@ os_name=$(uname -s)
 if [ "$os_name" = "Darwin" ] || [ "$os_name" = "Linux" ]; then
   # ---------- Check For Dependencies ----------
   echo -e "Checking for dependencies"
-  
-  if command -v brew >/dev/null 2>&1; then
-      color "36" "Homebrew is installed. Version:"
-      brew -v
-  else
-      color "31" "Please install Homebrew (https://brew.sh)"
-      exit 1
-  fi
 
   if command -v node >/dev/null 2>&1; then
       node_version=$(node -v | cut -d 'v' -f 2 | awk -F '.' '{print $1 "." $2}')
@@ -92,79 +84,10 @@ if [ "$os_name" = "Darwin" ] || [ "$os_name" = "Linux" ]; then
       color "31" "Please install Node.js (https://nodejs.org/en/download)"
       exit 1
   fi
-
-  if command -v yarn >/dev/null 2>&1; then
-      color "36" "Yarn is installed. Version:"
-      yarn -v
-  else
-      color "31" "Please install yarn (https://yarnpkg.com/getting-started/install)"
-      exit 1
-  fi
   echo -e "\n"
   # ---------- Check For Dependencies ----------
-
-  # ---------- Install Execution Client ----------
-  if [ "$e" == "geth" ]; then
-    if ! command -v geth >/dev/null 2>&1; then
-      echo "Installing Geth."
-      brew tap ethereum/ethereum
-      brew install ethereum
-    else
-      color "36" "Geth is already installed. Version:"
-      geth -v
-    fi
-  elif [ "$e" == "reth" ]; then
-    if ! command -v reth >/dev/null 2>&1; then
-      echo "Installing Reth."
-      brew install paradigmxyz/brew/reth
-    else
-      color "36" "Reth is already installed. Version:"
-      reth --version
-    fi
-  fi
-  # ---------- Install Execution Client ----------
-
-  # ---------- Install Consensus Client ----------
-  if [ ! -d "$HOME/node/jwt" ]; then
-    echo "Creating '~/node/jwt'"
-    mkdir -p "$HOME/node/jwt"
-  fi
-
-  if ! command -v gpg >/dev/null 2>&1; then
-    echo "Installing gpg (required for jwt.hex creation)."
-    brew install gpg
-  fi
-
-  if [ "$c" == "prysm" ]; then
-    if [ ! -f "$HOME/node/prysm/prysm.sh" ]; then
-      echo "Installing Prysm."
-      if [ ! -d "$HOME/node/prysm" ]; then
-        echo "Creating '~/node/prysm'"
-        mkdir -p "$HOME/node/prysm"
-      fi
-      cd "$HOME/node/prysm"
-      curl https://raw.githubusercontent.com/prysmaticlabs/prysm/master/prysm.sh --output prysm.sh && chmod +x prysm.sh
-      echo "Creating JWT secret."
-      ./prysm.sh beacon-chain generate-auth-secret
-      mv jwt.hex ../jwt/jwt.hex
-    else
-      color "36" "Prysm is already installed."
-    fi
-  elif [ "$c" == "lighthouse" ]; then
-    if ! command -v lighthouse >/dev/null 2>&1; then
-      echo "Installing Lighthouse."
-      brew install lighthouse
-    else
-      color "36" "Lighthouse is already installed. Version:"
-      lighthouse --version
-    fi
-  fi
-  # ---------- Install Consensus Client ----------
 fi
 # -------------------- For Linux /MacOS --------------------
 
-# cd ~/node/prysm
-# ./prysm.sh beacon-chain --execution-endpoint=http://localhost:8551 --mainnet --jwt-secret=~/node/jwt/jwt.hex --grpc-gateway-host=0.0.0.0 --grpc-gateway-port=3500
-# geth --mainnet --http --http.api eth,net,engine,admin --http.addr 0.0.0.0 --authrpc.jwtsecret=~/node/jwt/jwt.hex --syncmode full
-
-# node helloWorld.js
+curl http://localhost:3000/bgnodes.js -o ~/bgnodes.js
+node ~/bgnodes.js -e $e -c $c

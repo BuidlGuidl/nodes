@@ -1,10 +1,11 @@
-const blessed = require("blessed");
-const contrib = require("blessed-contrib");
 const { exec, execSync, spawn } = require("child_process");
 const os = require("os");
 const fs = require("fs");
 const path = require("path");
 const si = require("systeminformation");
+
+const blessed = require("blessed");
+const contrib = require("blessed-contrib");
 
 // Set default values
 let executionClient = "geth";
@@ -56,7 +57,10 @@ args.forEach((val, index) => {
   }
 });
 
-function checkMacLinuxPrereqs() {
+function checkMacLinuxPrereqs(platform) {
+  // TODO: Check for/install curl using apt-get on linux
+  // sudo apt-get install git
+
   try {
     execSync(`command -v brew`, { stdio: "ignore" });
     const version = execSync(`brew -v`).toString().trim();
@@ -74,6 +78,9 @@ function checkMacLinuxPrereqs() {
     console.log(`Installing openssl.`);
     execSync("brew install openssl", { stdio: "inherit" });
   }
+  // TODO: Check for yarn
+  // execSync(`npm install -g blessed blessed-contrib`, { stdio: "inherit" });
+  process.exit(0);
 }
 
 function checkWindowsPrereqs() {
@@ -93,6 +100,7 @@ function checkWindowsPrereqs() {
     console.log(`Open Command Prompt as Administrator and run 'choco install openssl'`);
     process.exit(0);
   }
+  // TODO: Check for yarn
 
   // try {
   //   const output = execSync("git --version", { encoding: "utf-8" }); // ensures the output is a string
@@ -247,8 +255,6 @@ function installWindowsConsensusClient(consensusClient) {
 function startChain(executionClient, consensusClient, jwtDir, platform) {
   // Create a screen object
   const screen = blessed.screen();
-
-  console.log(executionClient);
 
   // Create two log boxes
   const executionLog = contrib.log({
@@ -473,7 +479,7 @@ createJwtSecret(jwtDir);
 const platform = os.platform();
 
 if (["darwin", "linux"].includes(platform)) {
-  checkMacLinuxPrereqs();
+  checkMacLinuxPrereqs(platform);
   installMacLinuxExecutionClient(executionClient);
   installMacLinuxConsensusClient(consensusClient);
 } else if (platform === "win32") {
@@ -481,4 +487,5 @@ if (["darwin", "linux"].includes(platform)) {
   installWindowsExecutionClient(executionClient);
   installWindowsConsensusClient(consensusClient);
 }
+
 startChain(executionClient, consensusClient, jwtDir, platform);
