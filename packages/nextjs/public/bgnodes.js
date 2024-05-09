@@ -59,12 +59,13 @@ args.forEach((val, index) => {
 
 function checkMacLinuxPrereqs(platform) {
   // All these are required to be installed for linux: node, npm, yarn
+  // TODO: Figure out best way to: npm install -g blessed blessed-contrib
 
   if (platform === "linux") {
     try {
       execSync(`command -v curl`, { stdio: "ignore" });
       const version = execSync(`curl --version`).toString().trim();
-      color("36", `Curl is already installed. Version:\n${version}`);
+      color("36", `\nCurl is already installed. Version:\n${version}`);
     } catch {
       color("1", `\nPlease install Curl by running this command:`);
       color("1", `sudo apt-get install curl`);
@@ -90,21 +91,23 @@ function checkMacLinuxPrereqs(platform) {
   try {
     execSync(`command -v brew`, { stdio: "ignore" });
     const version = execSync(`brew -v`).toString().trim();
-    color("36", `Homebrew is already installed. Version:\n${version}`);
+    color("36", `\nHomebrew is already installed. Version:\n${version}`);
   } catch {
-    color("1", `\nPlease install Homebrew (https://brew.sh/).`);
+    color(
+      "1",
+      `\nPlease install Homebrew (https://brew.sh/). Make sure to follow "next steps" instructions shown after install!`,
+    );
     process.exit(0);
   }
 
   try {
     execSync(`command -v openssl`, { stdio: "ignore" });
     const version = execSync(`openssl -v`).toString().trim();
-    color("36", `openssl is already installed. Version:\n${version}`);
+    color("36", `\nopenssl is already installed. Version:\n${version}`);
   } catch {
     console.log(`\nInstalling openssl.`);
     execSync("brew install openssl", { stdio: "inherit" });
   }
-  // TODO: Check for yarn
   // execSync(`npm install -g blessed blessed-contrib`, { stdio: "inherit" });
   process.exit(0);
 }
@@ -112,7 +115,7 @@ function checkMacLinuxPrereqs(platform) {
 function checkWindowsPrereqs() {
   try {
     const version = execSync(`choco -v`).toString().trim();
-    color("36", `Chocolatey is already installed. Version:\n${version}`);
+    color("36", `\nChocolatey is already installed. Version:\n${version}`);
   } catch {
     color("1", `\nPlease install Chocolatey (https://community.chocolatey.org/).`);
     process.exit(0);
@@ -120,13 +123,12 @@ function checkWindowsPrereqs() {
 
   try {
     const version = execSync(`openssl -v`).toString().trim();
-    color("36", `Openssl is already installed. Version:\n${version}`);
+    color("36", `\nOpenssl is already installed. Version:\n${version}`);
   } catch {
     color("1", `\nPlease install openssl`);
     color("1", `Open Command Prompt as Administrator and run 'choco install openssl'`);
     process.exit(0);
   }
-  // TODO: Check for yarn
 
   // try {
   //   const output = execSync("git --version", { encoding: "utf-8" }); // ensures the output is a string
@@ -409,92 +411,14 @@ function startChain(executionClient, consensusClient, jwtDir, platform) {
 
   // Quit on Escape, q, or Control-C.
   screen.key(["escape", "q", "C-c"], function (ch, key) {
+    execSync("pkill geth", { stdio: "ignore" });
+    execSync("pkill reth", { stdio: "ignore" });
+    execSync("pkill lighthouse", { stdio: "ignore" });
     return process.exit(0);
-    // TODO: Make sure client processes terminate
   });
 
   screen.render();
 }
-
-// function startChain(executionClient, consensusClient, jwtDir, platform) {
-//   let execution;
-//   if (executionClient === "geth") {
-//     let gethCommand;
-//     if (["darwin", "linux"].includes(platform)) {
-//       gethCommand = "geth";
-//     } else if (platform === "win32") {
-//       gethCommand = path.join(os.homedir(), "bgnode", "geth", "geth.exe");
-//     }
-//     execution = spawn(`${gethCommand}`, [
-//       "--mainnet",
-//       "--http",
-//       "--http.api",
-//       "eth,net,engine,admin",
-//       "--http.addr",
-//       "0.0.0.0",
-//       "--syncmode",
-//       "full",
-//       "--authrpc.jwtsecret",
-//       `${jwtDir}/jwt.hex`,
-//     ]);
-
-//   } else if (executionClient === "reth") {
-//     let rethCommand;
-//     if (["darwin", "linux"].includes(platform)) {
-//       rethCommand = "reth";
-//     } else if (platform === "win32") {
-//       rethCommand = path.join(os.homedir(), "bgnode", "reth", "reth.exe");
-//     }
-//     execution = spawn(`${rethCommand}`, [
-//       "node",
-//       "--full",
-//       "--http",
-//       "--authrpc.addr",
-//       "127.0.0.1",
-//       "--authrpc.port",
-//       "8551",
-//       "--authrpc.jwtsecret",
-//       `${jwtDir}/jwt.hex`,
-//     ]);
-//   }
-
-//   let consensus;
-//   if (consensusClient === "prysm") {
-//     let prysmCommand;
-//     if (["darwin", "linux"].includes(platform)) {
-//       prysmCommand = path.join(os.homedir(), "bgnode", "prysm", "prysm.sh");
-//     } else if (platform === "win32") {
-//       prysmCommand = path.join(os.homedir(), "bgnode", "prysm", "prysm.bat");
-//     }
-//     consensus = spawn(`${prysmCommand}`, [
-//       "beacon-chain",
-//       "--execution-endpoint",
-//       "http://localhost:8551",
-//       "--mainnet",
-//       "--jwt-secret",
-//       `${jwtDir}/jwt.hex`,
-//     ]);
-//   } else if (consensusClient === "lighthouse") {
-//     let lighthouseCommand;
-//     if (["darwin", "linux"].includes(platform)) {
-//       lighthouseCommand = "lighthouse";
-//     } else if (platform === "win32") {
-//       lighthouseCommand = path.join(os.homedir(), "bgnode", "lighthouse", "lighthouse.exe");
-//     }
-//     consensus = spawn(`${lighthouseCommand}`, [
-//       "bn",
-//       "--network",
-//       "mainnet",
-//       "--execution-endpoint",
-//       "http://localhost:8551",
-//       "--execution-jwt",
-//       `${jwtDir}/jwt.hex`,
-//       "--checkpoint-sync-url",
-//       "https://mainnet.checkpoint.sigp.io",
-//       "--disable-deposit-contract-sync",
-//     ]);
-//   }
-// }
 
 console.log(`Execution client selected: ${executionClient}`);
 console.log(`Consensus client selected: ${consensusClient}\n`);
