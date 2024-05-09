@@ -58,8 +58,27 @@ args.forEach((val, index) => {
 });
 
 function checkMacLinuxPrereqs(platform) {
-  // TODO: Check for/install curl using apt-get on linux
-  // sudo apt-get install git
+  if (platform === "linux") {
+    try {
+      execSync(`command -v curl`, { stdio: "ignore" });
+      const version = execSync(`curl -v`).toString().trim();
+      color("36", `Curl is already installed. Version:\n${version}`);
+    } catch {
+      console.log(`Please install Curl by running this command:`);
+      color("4", `apt-get install curl`);
+      process.exit(0);
+    }
+  }
+
+  try {
+    execSync(`command -v git`, { stdio: "ignore" });
+    const version = execSync(`git -v`).toString().trim();
+    color("36", `git is already installed. Version:\n${version}`);
+  } catch {
+    console.log(`Please install git by running this command:`);
+    color("4", `apt-get install git`);
+    process.exit(0);
+  }
 
   try {
     execSync(`command -v brew`, { stdio: "ignore" });
