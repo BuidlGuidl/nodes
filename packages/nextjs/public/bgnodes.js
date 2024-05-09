@@ -109,7 +109,6 @@ function checkMacLinuxPrereqs(platform) {
     execSync("brew install openssl", { stdio: "inherit" });
   }
   // execSync(`npm install -g blessed blessed-contrib`, { stdio: "inherit" });
-  process.exit(0);
 }
 
 function checkWindowsPrereqs() {
@@ -411,20 +410,17 @@ function startChain(executionClient, consensusClient, jwtDir, platform) {
 
   // Quit on Escape, q, or Control-C.
   screen.key(["escape", "q", "C-c"], function (ch, key) {
-    const gethPID = execSync(`pgrep geth`).toString().trim();
-    if (gethPID !== "") {
+    // TODO: Make Windows processes exit
+    if (executionClient === "geth") {
       execSync("pkill geth", { stdio: "ignore" });
-    }
-
-    const rethPID = execSync(`pgrep reth`).toString().trim();
-    if (rethPID !== "") {
+    } else if (executionClient === "reth") {
       execSync("pkill reth", { stdio: "ignore" });
     }
 
-    const lighthousePID = execSync(`pgrep lighthouse`).toString().trim();
-    if (lighthousePID !== "") {
+    if (consensusClient === "lighthouse") {
       execSync("pkill lighthouse", { stdio: "ignore" });
     }
+
     return process.exit(0);
   });
 
