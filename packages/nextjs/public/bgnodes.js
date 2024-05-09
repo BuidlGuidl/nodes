@@ -411,9 +411,20 @@ function startChain(executionClient, consensusClient, jwtDir, platform) {
 
   // Quit on Escape, q, or Control-C.
   screen.key(["escape", "q", "C-c"], function (ch, key) {
-    execSync("pkill geth", { stdio: "ignore" });
-    execSync("pkill reth", { stdio: "ignore" });
-    execSync("pkill lighthouse", { stdio: "ignore" });
+    const gethPID = execSync(`pgrep geth`).toString().trim();
+    if (gethPID !== "") {
+      execSync("pkill geth", { stdio: "ignore" });
+    }
+
+    const rethPID = execSync(`pgrep reth`).toString().trim();
+    if (rethPID !== "") {
+      execSync("pkill reth", { stdio: "ignore" });
+    }
+
+    const lighthousePID = execSync(`pgrep lighthouse`).toString().trim();
+    if (lighthousePID !== "") {
+      execSync("pkill lighthouse", { stdio: "ignore" });
+    }
     return process.exit(0);
   });
 
