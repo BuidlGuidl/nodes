@@ -410,15 +410,26 @@ function startChain(executionClient, consensusClient, jwtDir, platform) {
 
   // Quit on Escape, q, or Control-C.
   screen.key(["escape", "q", "C-c"], function (ch, key) {
-    // TODO: Make Windows processes exit
-    if (executionClient === "geth") {
-      execSync("pkill geth", { stdio: "ignore" });
-    } else if (executionClient === "reth") {
-      execSync("pkill reth", { stdio: "ignore" });
-    }
+    if (["darwin", "linux"].includes(platform)) {
+      if (executionClient === "geth") {
+        execSync("pkill -SIGINT geth", { stdio: "ignore" });
+      } else if (executionClient === "reth") {
+        execSync("pkill -SIGINT reth", { stdio: "ignore" });
+      }
 
-    if (consensusClient === "lighthouse") {
-      execSync("pkill lighthouse", { stdio: "ignore" });
+      if (consensusClient === "lighthouse") {
+        execSync("pkill -SIGINT lighthouse", { stdio: "ignore" });
+      }
+    } else if (platform === "win32") {
+      if (executionClient === "geth") {
+        execSync("taskkill /IM geth.exe", { stdio: "ignore" });
+      } else if (executionClient === "reth") {
+        execSync("taskkill /IM reth.exe", { stdio: "ignore" });
+      }
+
+      if (consensusClient === "lighthouse") {
+        execSync("taskkill /IM lighthouse.exe", { stdio: "ignore" });
+      }
     }
 
     return process.exit(0);
