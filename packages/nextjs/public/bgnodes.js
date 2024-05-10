@@ -280,6 +280,7 @@ function installWindowsConsensusClient(consensusClient) {
 }
 
 function startChain(executionClient, consensusClient, jwtDir, platform) {
+  jwtPath = path.join(jwtDir, "jwt.hex");
   // Create a screen object
   const screen = blessed.screen();
 
@@ -324,8 +325,8 @@ function startChain(executionClient, consensusClient, jwtDir, platform) {
       "--syncmode",
       "full",
       "--authrpc.jwtsecret",
-      `${jwtDir}/jwt.hex`,
-    ]);
+      `${jwtPath}`,
+    ], { shell: true });
   } else if (executionClient === "reth") {
     let rethCommand;
     if (["darwin", "linux"].includes(platform)) {
@@ -342,7 +343,7 @@ function startChain(executionClient, consensusClient, jwtDir, platform) {
       "--authrpc.port",
       "8551",
       "--authrpc.jwtsecret",
-      `${jwtDir}/jwt.hex`,
+      `${jwtPath}`,
     ]);
   }
 
@@ -368,8 +369,8 @@ function startChain(executionClient, consensusClient, jwtDir, platform) {
       "http://localhost:8551",
       "--mainnet",
       "--jwt-secret",
-      `${jwtDir}/jwt.hex`,
-    ]);
+      `${jwtPath}`,
+    ], { shell: true });
   } else if (consensusClient === "lighthouse") {
     let lighthouseCommand;
     if (["darwin", "linux"].includes(platform)) {
@@ -384,7 +385,7 @@ function startChain(executionClient, consensusClient, jwtDir, platform) {
       "--execution-endpoint",
       "http://localhost:8551",
       "--execution-jwt",
-      `${jwtDir}/jwt.hex`,
+      `${jwtPath}`,
       "--checkpoint-sync-url",
       "https://mainnet.checkpoint.sigp.io",
       "--disable-deposit-contract-sync",
@@ -422,13 +423,15 @@ function startChain(executionClient, consensusClient, jwtDir, platform) {
       }
     } else if (platform === "win32") {
       if (executionClient === "geth") {
-        execSync("taskkill /IM geth.exe", { stdio: "ignore" });
+        execSync(`powershell -Command "Get-Process geth | Stop-Process"`);
       } else if (executionClient === "reth") {
-        execSync("taskkill /IM reth.exe", { stdio: "ignore" });
+        execSync(`powershell -Command "Get-Process reth | Stop-Process"`);
       }
 
-      if (consensusClient === "lighthouse") {
-        execSync("taskkill /IM lighthouse.exe", { stdio: "ignore" });
+      if (consensusClient === "prysm") {
+        execSync(`powershell -Command "Get-Process beacon-chain* | Stop-Process"`);
+      } else if (consensusClient === "lighthouse") {
+        execSync(`powershell -Command "Get-Process beacon-chain* | Stop-Process"`);
       }
     }
 
