@@ -315,18 +315,22 @@ function startChain(executionClient, consensusClient, jwtDir, platform) {
     } else if (platform === "win32") {
       gethCommand = path.join(os.homedir(), "bgnode", "geth", "geth.exe");
     }
-    execution = spawn(`${gethCommand}`, [
-      "--mainnet",
-      "--http",
-      "--http.api",
-      "eth,net,engine,admin",
-      "--http.addr",
-      "0.0.0.0",
-      "--syncmode",
-      "full",
-      "--authrpc.jwtsecret",
-      `${jwtPath}`,
-    ], { shell: true });
+    execution = spawn(
+      `${gethCommand}`,
+      [
+        "--mainnet",
+        "--http",
+        "--http.api",
+        "eth,net,engine,admin",
+        "--http.addr",
+        "0.0.0.0",
+        "--syncmode",
+        "full",
+        "--authrpc.jwtsecret",
+        `${jwtPath}`,
+      ],
+      { shell: true },
+    );
   } else if (executionClient === "reth") {
     let rethCommand;
     if (["darwin", "linux"].includes(platform)) {
@@ -334,17 +338,21 @@ function startChain(executionClient, consensusClient, jwtDir, platform) {
     } else if (platform === "win32") {
       rethCommand = path.join(os.homedir(), "bgnode", "reth", "reth.exe");
     }
-    execution = spawn(`${rethCommand}`, [
-      "node",
-      "--full",
-      "--http",
-      "--authrpc.addr",
-      "127.0.0.1",
-      "--authrpc.port",
-      "8551",
-      "--authrpc.jwtsecret",
-      `${jwtPath}`,
-    ]);
+    execution = spawn(
+      `${rethCommand}`,
+      [
+        "node",
+        "--full",
+        "--http",
+        "--authrpc.addr",
+        "127.0.0.1",
+        "--authrpc.port",
+        "8551",
+        "--authrpc.jwtsecret",
+        `${jwtPath}`,
+      ],
+      { shell: true },
+    );
   }
 
   execution.stdout.on("data", data => {
@@ -363,14 +371,11 @@ function startChain(executionClient, consensusClient, jwtDir, platform) {
     } else if (platform === "win32") {
       prysmCommand = path.join(os.homedir(), "bgnode", "prysm", "prysm.bat");
     }
-    consensus = spawn(`${prysmCommand}`, [
-      "beacon-chain",
-      "--execution-endpoint",
-      "http://localhost:8551",
-      "--mainnet",
-      "--jwt-secret",
-      `${jwtPath}`,
-    ], { shell: true });
+    consensus = spawn(
+      `${prysmCommand}`,
+      ["beacon-chain", "--execution-endpoint", "http://localhost:8551", "--mainnet", "--jwt-secret", `${jwtPath}`],
+      { shell: true },
+    );
   } else if (consensusClient === "lighthouse") {
     let lighthouseCommand;
     if (["darwin", "linux"].includes(platform)) {
@@ -378,18 +383,22 @@ function startChain(executionClient, consensusClient, jwtDir, platform) {
     } else if (platform === "win32") {
       lighthouseCommand = path.join(os.homedir(), "bgnode", "lighthouse", "lighthouse.exe");
     }
-    consensus = spawn(`${lighthouseCommand}`, [
-      "bn",
-      "--network",
-      "mainnet",
-      "--execution-endpoint",
-      "http://localhost:8551",
-      "--execution-jwt",
-      `${jwtPath}`,
-      "--checkpoint-sync-url",
-      "https://mainnet.checkpoint.sigp.io",
-      "--disable-deposit-contract-sync",
-    ]);
+    consensus = spawn(
+      `${lighthouseCommand}`,
+      [
+        "bn",
+        "--network",
+        "mainnet",
+        "--execution-endpoint",
+        "http://localhost:8551",
+        "--execution-jwt",
+        `${jwtPath}`,
+        "--checkpoint-sync-url",
+        "https://mainnet.checkpoint.sigp.io",
+        "--disable-deposit-contract-sync",
+      ],
+      { shell: true },
+    );
   }
 
   consensus.stdout.on("data", data => {
