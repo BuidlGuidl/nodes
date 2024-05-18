@@ -1,5 +1,8 @@
 #!/bin/bash
 
+set -e  # Exit immediately if a command exits with a non-zero status
+set -x  # Print commands and their arguments as they are executed
+
 # Default values for the options
 e="reth"
 c="lighthouse"
@@ -48,12 +51,12 @@ while getopts ":e:c:h" opt; do
       exit 0
       ;;
     \? )
-      color "31" "Invalid option: -$OPTARG"  1>&2
+      color "31" "Invalid option: -$OPTARG" 1>&2
       show_help
       exit 1
       ;;
     : )
-      color "31" "Option -$OPTARG requires an argument."  1>&2
+      color "31" "Option -$OPTARG requires an argument." 1>&2
       exit 1
       ;;
   esac
@@ -94,19 +97,9 @@ if [ "$os_name" = "Linux" ]; then
       git --version
   else
       color "1" "Installing Git"
-      sudo apt-get install git-all
+      sudo apt-get install git-all -y
   fi
 fi
-
-
-# if [ "$os_name" = "Darwin" ]; then
-#   if command -v git >/dev/null 2>&1; then
-#       color "36" "Git is installed. Version:"
-#       git --version
-#   else
-#       color "1" "\nNeed to install GIT"
-#   fi
-# fi
 
 color "1" "Cloning BGNodes repo"
 cd ~
@@ -114,6 +107,3 @@ git clone https://github.com/BuidlGuidl/nodes-script.git
 cd nodes-script
 yarn install
 node index.js
-
-# curl http://localhost:3000/bgnodes.js -o ~/bgnodes.js
-# node ~/bgnodes.js -e $e -c $c
