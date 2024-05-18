@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # Default values for the options
-e="geth"
-c="prysm"
+e="reth"
+c="lighthouse"
 
 # Help function to display usage information
 show_help() {
@@ -24,7 +24,7 @@ function color() {
     printf '\033[%sm%s\033[0m\n' "$@"
 }
 
-# ---------- Process command-line options ----------
+# Process command-line options
 while getopts ":e:c:h" opt; do
   case ${opt} in
     e )
@@ -58,36 +58,62 @@ while getopts ":e:c:h" opt; do
       ;;
   esac
 done
-# ---------- Process command-line options ----------
 
 echo "Execution client selected: $e"
 echo -e "Consensus client selected: $c\n"
 
 os_name=$(uname -s)
 
-# -------------------- For Linux/MacOS --------------------
-if [ "$os_name" = "Darwin" ] || [ "$os_name" = "Linux" ]; then
-  # ---------- Check For Dependencies ----------
+if [ "$os_name" = "Linux" ]; then
+  echo -e "Updating apt-get packages"
+  sudo apt-get update
+  sudo apt-get upgrade -y
+
   echo -e "Checking for dependencies"
 
   if command -v node >/dev/null 2>&1; then
-      node_version=$(node -v | cut -d 'v' -f 2 | awk -F '.' '{print $1 "." $2}')
-
-      if awk "BEGIN {exit !($node_version >= 18.17)}"; then
-          color "36" "Node.js is installed. Version:"
-          node -v
-      else
-          color "31" "Node.js version is less than 18.17. Please update to at least v18.17 (https://nodejs.org/en/download)"
-          exit 1
-      fi
+      color "36" "Node.js is installed. Version:"
+      node -v
   else
-      color "31" "Please install Node.js (https://nodejs.org/en/download)"
-      exit 1
+      color "1" "Installing Node.js"
+      cd ~
+      curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
+      sudo apt install -y nodejs
   fi
-  echo -e "\n"
-  # ---------- Check For Dependencies ----------
-fi
-# -------------------- For Linux /MacOS --------------------
 
-curl http://localhost:3000/bgnodes.js -o ~/bgnodes.js
-node ~/bgnodes.js -e $e -c $c
+  if command -v yarn >/dev/null 2>&1; then
+      color "36" "Yarn is installed. Version:"
+      yarn -v
+  else
+      color "1" "Installing Yarn"
+      sudo npm i yarn -g
+  fi
+
+  if command -v git >/dev/null 2>&1; then
+      color "36" "Git is installed. Version:"
+      git --version
+  else
+      color "1" "Installing Git"
+      sudo apt-get install git-all
+  fi
+fi
+
+
+# if [ "$os_name" = "Darwin" ]; then
+#   if command -v git >/dev/null 2>&1; then
+#       color "36" "Git is installed. Version:"
+#       git --version
+#   else
+#       color "1" "\nNeed to install GIT"
+#   fi
+# fi
+
+color "1" "Cloning BGNodes repo"
+cd ~
+git clone https://github.com/BuidlGuidl/nodes-script.git
+cd nodes-script
+yarn install
+node index.js
+
+# curl http://localhost:3000/bgnodes.js -o ~/bgnodes.js
+# node ~/bgnodes.js -e $e -c $c
