@@ -99,6 +99,14 @@ if [ "$os_name" = "Linux" ]; then
       color "1" "Installing Git"
       sudo apt-get install git-all -y
   fi
+
+  if command -v lz4 >/dev/null 2>&1; then
+      color "36" "LZ4 is installed. Version:"
+      lz4 --version
+  else
+      color "1" "Installing LZ4"
+      sudo apt-get install lz4
+  fi
 fi
 
 color "1" "Cloning BGNodes repo"
