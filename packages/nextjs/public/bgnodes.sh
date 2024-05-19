@@ -1,8 +1,5 @@
 #!/bin/bash
 
-set -e  # Exit immediately if a command exits with a non-zero status
-set -x  # Print commands and their arguments as they are executed
-
 # Default values for the options
 e="reth"
 c="lighthouse"
@@ -109,9 +106,12 @@ if [ "$os_name" = "Linux" ]; then
   fi
 fi
 
-color "1" "Cloning BGNodes repo"
-cd ~
-git clone https://github.com/BuidlGuidl/nodes-script.git
-cd nodes-script
-yarn install
+if [ ! -d "~/nodes-script" ]; then
+  color "1" "Cloning BGNodes repo"
+  cd ~
+  git clone https://github.com/BuidlGuidl/nodes-script.git
+  cd nodes-script
+  yarn install
+fi
+
 node index.js
