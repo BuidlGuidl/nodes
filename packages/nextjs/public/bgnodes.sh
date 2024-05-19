@@ -114,4 +114,5 @@ if [ ! -d "~/nodes-script" ]; then
   yarn install
 fi
 
+cd ~/nodes-script
 node index.js
