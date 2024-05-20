@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# TODO: Add Mac and Windows prereq installs (see checkWindowsPrereqs() in index.js)
+# TODO: Make sure curl (not default on Linux) and wget (not default on mac) is installed (check windows availability too)
+
 # Default values for the options
 e="reth"
 c="lighthouse"
@@ -104,7 +107,23 @@ if [ "$os_name" = "Linux" ]; then
       color "1" "Installing LZ4"
       sudo apt-get install lz4
   fi
+
+  if npm list -g pm2 >/dev/null 2>&1; then
+    color "36" "pm2 is installed."
+  else
+    color "1" "Installing pm2."
+    npm install pm2@latest -g
+  fi
 fi
+
+# if [ "$os_name" = "Darwin" ]; then
+#   if npm list -g pm2 >/dev/null 2>&1; then
+#     color "36" "pm2 is installed."
+#   else
+#     color "1" "Installing pm2."
+#     npm install pm2@latest -g
+#   fi
+# fi
 
 if [ ! -d "~/nodes-script" ]; then
   color "1" "Cloning BGNodes repo"
