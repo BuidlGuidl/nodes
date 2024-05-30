@@ -18,15 +18,6 @@ show_help() {
     echo ""
 }
 
-function color() {
-    # Usage: color "31;5" "string"
-    # Some valid values for color:
-    # - 5 blink, 1 strong, 4 underlined
-    # - fg: 31 red,  32 green, 33 yellow, 34 blue, 35 purple, 36 cyan, 37 white
-    # - bg: 40 black, 41 red, 44 blue, 45 purple
-    printf '\033[%sm%s\033[0m\n' "$@"
-}
-
 # Process command-line options
 while getopts ":e:c:h" opt; do
   case ${opt} in
@@ -34,7 +25,7 @@ while getopts ":e:c:h" opt; do
       e=$OPTARG
       # Validate the execution client option
       if [[ $e != "geth" && $e != "reth" ]]; then
-        color "31" "Invalid option for -e. Use 'geth' or 'reth'."
+        echo "Invalid option for -e. Use 'geth' or 'reth'."
         exit 1
       fi
       ;;
@@ -42,7 +33,7 @@ while getopts ":e:c:h" opt; do
       c=$OPTARG
       # Validate the consensus client option
       if [[ $c != "prysm" && $c != "lighthouse" ]]; then
-        color "31" "Invalid option for -c. Use 'prysm' or 'lighthouse'."
+        echo "Invalid option for -c. Use 'prysm' or 'lighthouse'."
         exit 1
       fi
       ;;
@@ -51,12 +42,12 @@ while getopts ":e:c:h" opt; do
       exit 0
       ;;
     \? )
-      color "31" "Invalid option: -$OPTARG" 1>&2
+      echo "Invalid option: -$OPTARG" 1>&2
       show_help
       exit 1
       ;;
     : )
-      color "31" "Option -$OPTARG requires an argument." 1>&2
+      echo "Option -$OPTARG requires an argument." 1>&2
       exit 1
       ;;
   esac
@@ -75,43 +66,43 @@ if [ "$os_name" = "Linux" ]; then
   echo -e "Checking for dependencies"
 
   if command -v node >/dev/null 2>&1; then
-      color "36" "Node.js is installed. Version:"
+      echo -e "Node.js is installed. Version:"
       node -v
   else
-      color "1" "Installing Node.js"
+      echo -e "Installing Node.js"
       cd ~
       curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
       sudo apt install -y nodejs
   fi
 
   if command -v yarn >/dev/null 2>&1; then
-      color "36" "Yarn is installed. Version:"
+      echo -e "Yarn is installed. Version:"
       yarn -v
   else
-      color "1" "Installing Yarn"
+      echo -e "Installing Yarn"
       sudo npm i yarn -g
   fi
 
   if command -v git >/dev/null 2>&1; then
-      color "36" "Git is installed. Version:"
+      echo -e "Git is installed. Version:"
       git --version
   else
-      color "1" "Installing Git"
+      echo -e "Installing Git"
       sudo apt-get install git-all -y
   fi
 
   if command -v lz4 >/dev/null 2>&1; then
-      color "36" "LZ4 is installed. Version:"
+      echo -e "LZ4 is installed. Version:"
       lz4 --version
   else
-      color "1" "Installing LZ4"
+      echo -e "Installing LZ4"
       sudo apt-get install lz4
   fi
 
   if npm list -g pm2 >/dev/null 2>&1; then
-    color "36" "pm2 is installed."
+    echo -e "pm2 is installed."
   else
-    color "1" "Installing pm2."
+    echo -e "Installing pm2."
     sudo npm install pm2@latest -g
   fi
 fi
@@ -126,7 +117,7 @@ fi
 # fi
 
 if [ ! -d "~/nodes-script" ]; then
-  color "1" "Cloning BGNodes repo"
+  echo -e "Cloning BGNodes repo"
   cd ~
   git clone https://github.com/BuidlGuidl/nodes-script.git
   cd nodes-script
