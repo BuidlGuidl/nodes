@@ -112,7 +112,7 @@ if [ "$os_name" = "Linux" ]; then
     color "36" "pm2 is installed."
   else
     color "1" "Installing pm2."
-    npm install pm2@latest -g
+    sudo npm install pm2@latest -g
   fi
 fi
 
