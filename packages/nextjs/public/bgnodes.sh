@@ -4,7 +4,7 @@
 # TODO: Make sure curl (not default on Linux) and wget (not default on mac) is installed (check windows availability too)
 
 # Default values for the options
-e="weth"
+e="geth"
 c="prysm"
 
 # Help function to display usage information
