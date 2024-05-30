@@ -16,12 +16,12 @@ const Home: NextPage = () => {
             </pre>
           </h1>
 
-          <h1 className="text-center">
+          {/* <h1 className="text-center">
             <span className="block text-2xl mb-2">windows:</span>
             <pre className="bg-black text-white p-8 rounded">
               <code>{`wget -qO- https://nodes.buidlguidl.com/bgnodes.sh | /bin/bash`}</code>
             </pre>
-          </h1>
+          </h1> */}
         </div>
       </div>
     </>
