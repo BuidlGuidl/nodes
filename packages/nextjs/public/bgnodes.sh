@@ -59,65 +59,126 @@ echo -e "Consensus client selected: $c\n"
 os_name=$(uname -s)
 
 if [ "$os_name" = "Linux" ]; then
-  echo -e "Updating apt-get packages"
-  sudo apt-get update
-  sudo apt-get upgrade -y
+  # echo -e "Updating apt-get packages"
+  # sudo apt-get update
+  # sudo apt-get upgrade -y
 
-  echo -e "Checking for dependencies"
+  echo -e "\nChecking for dependencies"
 
   if command -v node >/dev/null 2>&1; then
-      echo -e "Node.js is installed. Version:"
+      echo -e "\nNode.js is installed. Version:"
       node -v
   else
-      echo -e "Installing Node.js"
-      cd ~
-      curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
-      sudo apt install -y nodejs
+      echo -e "\nRun these lines to install Node.js"
+      echo -e "curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash -"
+      echo -e "sudo apt install -y nodejs"
+      exit
+      # echo -e "\nInstalling Node.js"
+      # cd ~
+      # curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
+      # sudo apt install -y nodejs
   fi
 
   if command -v yarn >/dev/null 2>&1; then
-      echo -e "Yarn is installed. Version:"
+      echo -e "\nYarn is installed. Version:"
       yarn -v
   else
-      echo -e "Installing Yarn"
-      sudo npm i yarn -g
+      echo -e "\nRun this line to install Yarn"
+      echo -e "sudo npm i yarn -g"
+      exit
+      # echo -e "\nInstalling Yarn"
+      # sudo npm i yarn -g
   fi
 
   if command -v git >/dev/null 2>&1; then
-      echo -e "Git is installed. Version:"
+      echo -e "\nGit is installed. Version:"
       git --version
   else
-      echo -e "Installing Git"
-      sudo apt-get install git-all -y
+      echo -e "\nRun this line to install Git"
+      echo -e "sudo apt-get install git-all -y"
+      exit
+      # echo -e "\nInstalling Git"
+      # sudo apt-get install git-all -y
   fi
 
-  if command -v lz4 >/dev/null 2>&1; then
-      echo -e "LZ4 is installed. Version:"
-      lz4 --version
-  else
-      echo -e "Installing LZ4"
-      sudo apt-get install lz4
-  fi
+  # if command -v lz4 >/dev/null 2>&1; then
+  #     echo -e "\nLZ4 is installed. Version:"
+  #     lz4 --version
+  # else
+  #     echo -e "\nInstalling LZ4"
+  #     sudo apt-get install lz4
+  # fi
 
   if npm list -g pm2 >/dev/null 2>&1; then
-    echo -e "pm2 is installed."
+    echo -e "\npm2 is installed."
   else
-    echo -e "Installing pm2."
-    sudo npm install pm2@latest -g
+    echo -e "\Run this line to install pm2"
+    echo -e "sudo npm install pm2@latest -g"
+    exit
+    # echo -e "\nInstalling pm2."
+    # sudo npm install pm2@latest -g
   fi
 fi
 
-# if [ "$os_name" = "Darwin" ]; then
-#   if npm list -g pm2 >/dev/null 2>&1; then
-#     color "36" "pm2 is installed."
-#   else
-#     color "1" "Installing pm2."
-#     npm install pm2@latest -g
-#   fi
-# fi
+if [ "$os_name" = "Darwin" ]; then
+  echo -e "\nChecking for dependencies"
+
+  if command -v node >/dev/null 2>&1; then
+      echo -e "\nNode.js is installed. Version:"
+      node -v
+  else
+      echo -e "\nRun this line to install Node.js"
+      echo -e "brew install node"
+      exit
+  fi
+
+  if command -v yarn >/dev/null 2>&1; then
+      echo -e "\nYarn is installed. Version:"
+      yarn -v
+  else
+      echo -e "\nRun this line to install Yarn"
+      echo -e "brew install yarn"
+      exit
+  fi
+
+  if command -v git >/dev/null 2>&1; then
+      echo -e "\nGit is installed. Version:"
+      git --version
+  else
+      echo -e "\nRun this line to install Git"
+      echo -e "brew install git"
+      exit
+  fi
+
+  if npm list -g pm2 >/dev/null 2>&1; then
+    echo -e "\npm2 is installed."
+  else
+    echo -e "\nRun this line to install pm2:"
+    echo "npm i -g pm2"
+    exit
+  fi
+
+  if command -v gpg >/dev/null 2>&1; then
+    echo -e "\ngnupg is installed."
+  else
+    echo -e "\nRun this line to install gnupg:"
+    echo "brew install gnupg"
+    exit
+  fi
+
+  if perl -MDigest::SHA -e '1' >/dev/null 2>&1; then
+    echo -e "\nperl-Digest-SHA is installed."
+  else
+    echo -e "\nRun these lines to install perl-Digest-SHA"
+    echo "brew install perl"
+    echo "brew install cpanminus"
+    echo "cpanm Digest::SHA"
+    exit
+  fi
+fi
 
 if [ ! -d "~/nodes-script" ]; then
-  echo -e "Cloning BGNodes repo"
+  echo -e "\nCloning BGNodes repo"
   cd ~
   git clone https://github.com/BuidlGuidl/nodes-script.git
   cd nodes-script
