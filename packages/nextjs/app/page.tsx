@@ -15,13 +15,20 @@ const Home: NextPage = () => {
               <code>{`curl -s https://nodes.buidlguidl.com/runBuidlGuidlClient.sh | /bin/bash`}</code>
             </pre>
           </h1>
-
-          {/* <h1 className="text-center">
-            <span className="block text-2xl mb-2">windows:</span>
-            <pre className="bg-black text-white p-8 rounded">
-              <code>{`wget -qO- https://nodes.buidlguidl.com/runBuidlGuidlClient.sh | /bin/bash`}</code>
+        </div>
+        <div className="pt-8">
+          <h1 className="text-center">
+            <span className="block text-2xl mt-4">or run the client from the repo:</span>
+            <span className="block text-2xl mb-2 mt-8"></span>
+            <pre className="bg-black text-white p-8 rounded text-left">
+              <code>{`
+git clone https://github.com/BuidlGuidl/buidlguidl-client.git
+cd buidlguidl-client
+yarn install
+node index.js
+              `}</code>
             </pre>
-          </h1> */}
+          </h1>
         </div>
       </div>
     </>
