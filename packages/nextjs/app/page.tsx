@@ -12,7 +12,7 @@ const Home: NextPage = () => {
             <span className="block text-2xl mt-4">run an ethereum node in one command</span>
             <span className="block text-2xl mb-2 mt-8">mac/linux:</span>
             <pre className="bg-black text-white p-8 rounded">
-              <code>{`curl -s https://nodes.buidlguidl.com/bgnodes.sh | /bin/bash`}</code>
+              <code>{`curl -s https://nodes.buidlguidl.com/runBuidlGuidlClient.sh | /bin/bash`}</code>
             </pre>
           </h1>
 
