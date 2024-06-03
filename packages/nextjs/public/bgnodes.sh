@@ -1,7 +1,9 @@
 #!/bin/bash
 
 # TODO: Add Mac and Windows prereq installs (see checkWindowsPrereqs() in index.js)
-# TODO: Make sure curl (not default on Linux) and wget (not default on mac) is installed (check windows availability too)
+# TODO: Make sure curl (not default on Linux) and wget (not default on mac) is installed (check windows availability too
+# TODO: OpenSSL...
+# TODO: Need a sudo apt install for npm after nodejs
 
 # Default values for the options
 e="geth"
