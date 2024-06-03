@@ -179,13 +179,13 @@ if [ "$os_name" = "Darwin" ]; then
   fi
 fi
 
-if [ ! -d "~/nodes-script" ]; then
+if [ ! -d "~/buidlguidl-client" ]; then
   echo -e "\nCloning BGNodes repo"
   cd ~
-  git clone https://github.com/BuidlGuidl/nodes-script.git
-  cd nodes-script
+  git clone https://github.com/BuidlGuidl/buidlguidl-client.git
+  cd buidlguidl-client
   yarn install
 fi
 
-cd ~/nodes-script
+cd ~/buidlguidl-client
 node index.js
