@@ -120,6 +120,17 @@ if [ "$os_name" = "Linux" ]; then
     # echo -e "\nInstalling pm2."
     # sudo npm install pm2@latest -g
   fi
+
+  if command -v make >/dev/null 2>&1; then
+      echo -e "\nGNU Make is installed. Version:"
+      yarn -v
+  else
+      echo -e "\nRun this line to install GNU Make"
+      echo -e "sudo apt-get install build-essential"
+      exit
+      # echo -e "\nInstalling Yarn"
+      # sudo npm i yarn -g
+  fi
 fi
 
 if [ "$os_name" = "Darwin" ]; then
@@ -152,12 +163,23 @@ if [ "$os_name" = "Darwin" ]; then
       exit
   fi
 
-  if npm list -g pm2 >/dev/null 2>&1; then
-    echo -e "\npm2 is installed."
+  # if npm list -g pm2 >/dev/null 2>&1; then
+  #   echo -e "\npm2 is installed."
+  # else
+  #   echo -e "\nRun this line to install pm2:"
+  #   echo "npm i -g pm2"
+  #   exit
+  # fi
+
+  if command -v make >/dev/null 2>&1; then
+      echo -e "\nGNU Make is installed. Version:"
+      yarn -v
   else
-    echo -e "\nRun this line to install pm2:"
-    echo "npm i -g pm2"
-    exit
+      echo -e "\nRun this line to install GNU Make"
+      echo -e "brew install make"
+      exit
+      # echo -e "\nInstalling Yarn"
+      # sudo npm i yarn -g
   fi
 
   if command -v gpg >/dev/null 2>&1; then
