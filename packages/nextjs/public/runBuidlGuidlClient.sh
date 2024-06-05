@@ -1,7 +1,6 @@
 #!/bin/bash
 
 # TODO: Add Mac and Windows prereq installs (see checkWindowsPrereqs() in index.js)
-# TODO: Make sure curl (not default on Linux) and wget (not default on mac) is installed (check windows availability too
 # TODO: OpenSSL...
 # TODO: Need a sudo apt install for npm after nodejs
 
@@ -111,15 +110,15 @@ if [ "$os_name" = "Linux" ]; then
   #     sudo apt-get install lz4
   # fi
 
-  if npm list -g pm2 >/dev/null 2>&1; then
-    echo -e "\npm2 is installed."
-  else
-    echo -e "\Run this line to install pm2"
-    echo -e "sudo npm install pm2@latest -g"
-    exit
-    # echo -e "\nInstalling pm2."
-    # sudo npm install pm2@latest -g
-  fi
+  # if npm list -g pm2 >/dev/null 2>&1; then
+  #   echo -e "\npm2 is installed."
+  # else
+  #   echo -e "\Run this line to install pm2"
+  #   echo -e "sudo npm install pm2@latest -g"
+  #   exit
+  #   # echo -e "\nInstalling pm2."
+  #   # sudo npm install pm2@latest -g
+  # fi
 
   if command -v make >/dev/null 2>&1; then
       echo -e "\nGNU Make is installed. Version:"
