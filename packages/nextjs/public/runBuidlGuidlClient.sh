@@ -79,15 +79,18 @@ if [ "$os_name" = "Linux" ]; then
       echo -e "\n✅ Node is installed. Version:"
       node -v
   else
-    if confirm "\n❓ Node is not installed. Do you want to install it?"; then
-      echo -e "\n💪 Installing Node.js"
-      cd ~
-      curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
-      sudo apt install -y nodejs
+    read -r -p "❓ Node is not installed. Do you want to install it? [y/N] " -n 1
+    if [[ "$REPLY" =~ ^[Yy]$ ]]; then
+        echo -e "\n💪 Installing Node"
+        cd ~
+        curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
+        sudo apt install -y nodejs
     else
       echo -e "\n👎 Node installation canceled."
     fi
   fi
+
+  exit
 
   if command -v npm >/dev/null 2>&1; then
     echo -e "\n✅ NPM is installed. Version:"
@@ -192,9 +195,10 @@ if [ "$os_name" = "Darwin" ]; then
   if command -v gpg >/dev/null 2>&1; then
     echo -e "\n✅ gnupg is installed."
   else
-    if confirm "\n❓ gnupg is not installed. Do you want to install it?"; then
-      echo -e "\n💪 Installing gnupg:"
-      brew install gnupg
+    read -r -p "❓ gnupg is not installed. Do you want to install it? [y/N] " -n 1
+    if [[ "$REPLY" =~ ^[Yy]$ ]]; then
+        echo -e "\n💪 Installing gnupg:"
+        brew install gnupg
     else
       echo -e "\n👎 gnupg installation canceled."
     fi
