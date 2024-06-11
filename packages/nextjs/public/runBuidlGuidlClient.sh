@@ -81,7 +81,7 @@ if [ "$os_name" = "Linux" ]; then
       echo -e "\n✅ Node is installed. Version:"
       node -v
   else
-    if confirm "\n❓ Node is not installed. Do you want to install it?"; then
+    if confirm "❓ Node is not installed. Do you want to install it?"; then
       echo -e "\n💪 Installing Node.js"
       cd ~
       curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
@@ -95,7 +95,7 @@ if [ "$os_name" = "Linux" ]; then
     echo -e "\n✅ NPM is installed. Version:"
     npm -v
   else
-    if confirm "\n❓ NPM is not installed. Do you want to install it?"; then
+    if confirm "❓ NPM is not installed. Do you want to install it?"; then
       echo -e "\n💪 Installing NPM"
       sudo apt install npm
     else
@@ -107,7 +107,7 @@ if [ "$os_name" = "Linux" ]; then
       echo -e "\n✅ Yarn is installed. Version:"
       yarn -v
   else
-    if confirm "\n❓ Yarn is not installed. Do you want to install it?"; then
+    if confirm "❓ Yarn is not installed. Do you want to install it?"; then
       echo -e "\n💪 Installing Yarn"
       sudo npm i yarn -g
     else
@@ -119,7 +119,7 @@ if [ "$os_name" = "Linux" ]; then
       echo -e "\n✅ Git is installed. Version:"
       git --version
   else
-    if confirm "\n❓ Git is not installed. Do you want to install it?"; then
+    if confirm "❓ Git is not installed. Do you want to install it?"; then
       echo -e "\n💪 Installing Git"
       sudo apt-get install git-all -y
     else
@@ -131,7 +131,7 @@ if [ "$os_name" = "Linux" ]; then
       echo -e "\n✅ GNU Make is installed. Version:"
       make -v
   else
-    if confirm "\n❓ GNU Make is not installed. Do you want to install it?"; then
+    if confirm "❓ GNU Make is not installed. Do you want to install it?"; then
       echo -e "\n💪 Installing GNU Make"
       sudo apt-get install build-essential
     else
@@ -147,7 +147,7 @@ if [ "$os_name" = "Darwin" ]; then
       echo -e "\n✅ Node is installed. Version:"
       node -v
   else
-    if confirm "\n❓ Node is not installed. Do you want to install it?"; then
+    if confirm "❓ Node is not installed. Do you want to install it?"; then
       echo -e "\n💪 Installing Node"
       brew install node
     else
@@ -159,7 +159,7 @@ if [ "$os_name" = "Darwin" ]; then
       echo -e "\n✅ Yarn is installed. Version:"
       yarn -v
   else
-    if confirm "\n❓ Yarn is not installed. Do you want to install it?"; then
+    if confirm "❓ Yarn is not installed. Do you want to install it?"; then
       echo -e "\n💪 Installing Yarn"
       brew install yarn
     else
@@ -171,7 +171,7 @@ if [ "$os_name" = "Darwin" ]; then
       echo -e "\nGit is installed. Version:"
       git --version
   else
-    if confirm "\n❓ Git is not installed. Do you want to install it?"; then
+    if confirm "❓ Git is not installed. Do you want to install it?"; then
       echo -e "\n💪 Installing Git"
       brew install git
     else
@@ -183,7 +183,7 @@ if [ "$os_name" = "Darwin" ]; then
       echo -e "\n✅ GNU Make is installed. Version:"
       make -v
   else
-    if confirm "\n❓ GNU Make is not installed. Do you want to install it?"; then
+    if confirm "❓ GNU Make is not installed. Do you want to install it?"; then
       echo -e "\n💪 Installing GNU Make"
       brew install make
     else
@@ -194,7 +194,7 @@ if [ "$os_name" = "Darwin" ]; then
   if command -v gpg >/dev/null 2>&1; then
     echo -e "\n✅ gnupg is installed."
   else
-    if confirm "\n❓ gnupg is not installed. Do you want to install it?"; then
+    if confirm "❓ gnupg is not installed. Do you want to install it?"; then
       echo -e "\n💪 Installing gnupg:"
       brew install gnupg
     else
@@ -205,7 +205,7 @@ if [ "$os_name" = "Darwin" ]; then
   if perl -MDigest::SHA -e '1' >/dev/null 2>&1; then
     echo -e "\n✅ Perl-Digest-SHA is installed."
   else
-    if confirm "\n❓ Perl-Digest-SHA is not installed. Do you want to install it?"; then
+    if confirm "❓ Perl-Digest-SHA is not installed. Do you want to install it?"; then
       echo -e "\n💪 Installing perl-Digest-SHA"
       brew install perl
       brew install cpanminus
@@ -217,11 +217,15 @@ if [ "$os_name" = "Darwin" ]; then
 fi
 
 if [ ! -d "$HOME/buidlguidl-client" ]; then
-  echo -e "\nCloning BGNodes repo"
+  echo -e "\n🚀 Cloning buidlguidl-client repo"
   cd ~
   git clone https://github.com/BuidlGuidl/buidlguidl-client.git
   cd buidlguidl-client
   yarn install
+else
+  echo -e "\n⌛️ Updating buidlguidl-client repo"
+  cd "$HOME/buidlguidl-client"
+  git pull
 fi
 
 cd "$HOME/buidlguidl-client"
