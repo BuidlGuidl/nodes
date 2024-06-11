@@ -79,8 +79,8 @@ if [ "$os_name" = "Linux" ]; then
       echo -e "\n✅ Node is installed. Version:"
       node -v
   else
-    read -r -p "❓ Node is not installed. Do you want to install it? [y/N] " -n 1
-    if [[ "$REPLY" =~ ^[Yy]$ ]]; then
+    read -r -p "❓ Node is not installed. Do you want to install it? [y/N] " response
+    if [[ "$response" =~ ^[Yy]$ ]]; then
         echo -e "\n💪 Installing Node"
         cd ~
         curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
