@@ -50,21 +50,8 @@ while getopts ":e:c:h" opt; do
   esac
 done
 
-# Function to ask for user confirmation
-confirm() {
-    # Loop until a valid response is received
-    while true; do
-        read -r -p "$1 [Y/n]: " response
-        case "$response" in
-            [Yy]* ) return 0;;   # User confirmed (yes)
-            [Nn]* ) return 1;;   # User denied (no)
-            * ) echo "Please answer yes or no.";;
-        esac
-    done
-}
-
-echo "Execution client selected: $e"
-echo -e "Consensus client selected: $c\n"
+echo "🕸 Execution client selected: $e"
+echo -e "🕸 Consensus client selected: $c\n"
 
 os_name=$(uname -s)
 
@@ -86,7 +73,7 @@ if [ "$os_name" = "Linux" ]; then
         curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
         sudo apt install -y nodejs
     else
-      echo -e "\n👎 Node installation canceled."
+      echo -e "\n👎 Node installation canceled.\n"
     fi
   fi
 
@@ -99,7 +86,7 @@ if [ "$os_name" = "Linux" ]; then
         echo -e "\n💪 Installing NPM"
         sudo apt install npm
     else
-      echo -e "\n👎 NPM installation canceled."
+      echo -e "\n👎 NPM installation canceled.\n"
     fi
   fi
 
@@ -112,7 +99,7 @@ if [ "$os_name" = "Linux" ]; then
         echo -e "\n💪 Installing Yarn"
         sudo npm i yarn -g
     else
-      echo -e "\n👎 Yarn installation canceled."
+      echo -e "\n👎 Yarn installation canceled.\n"
     fi
   fi
 
@@ -125,7 +112,7 @@ if [ "$os_name" = "Linux" ]; then
         echo -e "\n💪 Installing Git"
         sudo apt-get install git-all -y
     else
-      echo -e "\n👎 Git installation canceled."
+      echo -e "\n👎 Git installation canceled.\n"
     fi
   fi
 
@@ -138,7 +125,7 @@ if [ "$os_name" = "Linux" ]; then
         echo -e "\n💪 Installing GNU Make"
         sudo apt-get install build-essential
     else
-      echo -e "\n👎 GNU Make installation canceled."
+      echo -e "\n👎 GNU Make installation canceled.\n"
     fi
   fi
 fi
@@ -150,11 +137,12 @@ if [ "$os_name" = "Darwin" ]; then
       echo -e "\n✅ Node is installed. Version:"
       node -v
   else
-    if confirm "\n❓ Node is not installed. Do you want to install it?"; then
+    read -r -p "❓ Node is not installed. Do you want to install it? [y/n] " response
+    if [[ "$response" =~ ^[Yy]$ ]]; then
       echo -e "\n💪 Installing Node"
       brew install node
     else
-      echo -e "\n👎 Node installation canceled."
+      echo -e "\n👎 Node installation canceled.\n"
     fi
   fi
 
@@ -162,23 +150,25 @@ if [ "$os_name" = "Darwin" ]; then
       echo -e "\n✅ Yarn is installed. Version:"
       yarn -v
   else
-    if confirm "\n❓ Yarn is not installed. Do you want to install it?"; then
+    read -r -p "❓ Yarn is not installed. Do you want to install it? [y/n] " response
+    if [[ "$response" =~ ^[Yy]$ ]]; then
       echo -e "\n💪 Installing Yarn"
       brew install yarn
     else
-      echo -e "\n👎 Yarn installation canceled."
+      echo -e "\n👎 Yarn installation canceled.\n"
     fi
   fi
 
   if command -v git >/dev/null 2>&1; then
-      echo -e "\nGit is installed. Version:"
+      echo -e "\n✅ Git is installed. Version:"
       git --version
   else
-    if confirm "\n❓ Git is not installed. Do you want to install it?"; then
+    read -r -p "❓ Git is not installed. Do you want to install it? [y/n] " response
+    if [[ "$response" =~ ^[Yy]$ ]]; then
       echo -e "\n💪 Installing Git"
       brew install git
     else
-      echo -e "\n👎 Git installation canceled."
+      echo -e "\n👎 Git installation canceled.\n"
     fi
   fi
 
@@ -186,36 +176,38 @@ if [ "$os_name" = "Darwin" ]; then
       echo -e "\n✅ GNU Make is installed. Version:"
       make -v
   else
-    if confirm "\n❓ GNU Make is not installed. Do you want to install it?"; then
+    read -r -p "❓ GNU Make is not installed. Do you want to install it? [y/n] " response
+    if [[ "$response" =~ ^[Yy]$ ]]; then
       echo -e "\n💪 Installing GNU Make"
       brew install make
     else
-        echo -e "\n👎 GNU Make installation canceled."
+      echo -e "\n👎 GNU Make installation canceled.\n"
     fi
   fi
 
   if command -v gpg >/dev/null 2>&1; then
     echo -e "\n✅ gnupg is installed."
   else
-    read -r -p "❓ gnupg is not installed. Do you want to install it? [y/N] " -n 1
-    if [[ "$REPLY" =~ ^[Yy]$ ]]; then
-        echo -e "\n💪 Installing gnupg:"
+    read -r -p "❓ gnupg is not installed. Do you want to install it? [y/n] " response
+    if [[ "$response" =~ ^[Yy]$ ]]; then
+        echo -e "\n💪 Installing gnupg"
         brew install gnupg
     else
-      echo -e "\n👎 gnupg installation canceled."
+      echo -e "\n👎 gnupg installation canceled.\n"
     fi
   fi
 
   if perl -MDigest::SHA -e '1' >/dev/null 2>&1; then
     echo -e "\n✅ Perl-Digest-SHA is installed."
   else
-    if confirm "\n❓ Perl-Digest-SHA is not installed. Do you want to install it?"; then
+    read -r -p "❓ Perl-Digest-SHA is not installed. Do you want to install it? [y/n] " response
+    if [[ "$response" =~ ^[Yy]$ ]]; then
       echo -e "\n💪 Installing perl-Digest-SHA"
       brew install perl
       brew install cpanminus
       cpanm Digest::SHA
     else
-      echo -e "\n👎 Perl-Digest-SHA installation canceled."
+      echo -e "\n👎 Perl-Digest-SHA installation canceled.\n"
     fi
   fi
 fi
