@@ -72,6 +72,7 @@ if [ "$os_name" = "Linux" ]; then
         cd ~
         curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
         sudo apt install -y nodejs
+        source ~/.bashrc
     else
       echo -e "\n👎 Node installation canceled."
     fi
