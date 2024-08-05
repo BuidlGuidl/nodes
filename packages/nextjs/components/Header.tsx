@@ -81,7 +81,7 @@ export const Header = () => {
           <div className="flex relative w-10 h-10 text-3xl">🛰️</div>
           <div className="flex flex-col">
             <span className="font-bold leading-tight">BuidlGuidl</span>
-            <span className="text-xs">nodes</span>
+            <span className="text-xs">Client</span>
           </div>
         </Link>
         <ul className="hidden lg:flex lg:flex-nowrap menu menu-horizontal px-1 gap-2">
