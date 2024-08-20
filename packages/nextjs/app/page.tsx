@@ -1,8 +1,12 @@
 "use client";
 
-import type { NextPage } from "next";
+import { useState } from "react";
+import Image from "next/image";
+import { NextPage } from "next";
 
 const Home: NextPage = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   return (
     <>
       <div className="flex items-center flex-col flex-grow pt-10">
@@ -30,6 +34,35 @@ node index.js
             </pre>
           </h1>
         </div>
+        <div className="mt-8">
+          <h2 className="text-2xl text-center mb-4">screenshot:</h2>
+          <Image
+            src="/screen.png"
+            alt="Screenshot of the node running"
+            width={500}
+            height={300}
+            className="rounded-lg shadow-lg cursor-pointer"
+            onClick={() => setIsModalOpen(true)}
+          />
+        </div>
+
+        {isModalOpen && (
+          <div
+            className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+            onClick={() => setIsModalOpen(false)}
+          >
+            <div className="max-w-[90vw] max-h-[90vh]">
+              <Image
+                src="/screen.png"
+                alt="Screenshot of the node running"
+                width={1920}
+                height={1080}
+                className="rounded-lg"
+                onClick={e => e.stopPropagation()}
+              />
+            </div>
+          </div>
+        )}
       </div>
     </>
   );
