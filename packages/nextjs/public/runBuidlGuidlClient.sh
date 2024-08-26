@@ -56,9 +56,9 @@ echo -e "🕸 Consensus client selected: $c\n"
 os_name=$(uname -s)
 
 if [ "$os_name" = "Linux" ]; then
-  echo -e "\n💪 Updating apt-get packages"
-  sudo apt-get update
-  sudo apt-get upgrade -y
+  # echo -e "\n💪 Updating apt-get packages"
+  # sudo apt-get update
+  # sudo apt-get upgrade -y
 
   echo -e "\n🕵️ Checking for dependencies\n"
 
