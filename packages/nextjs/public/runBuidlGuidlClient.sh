@@ -114,7 +114,7 @@ if [ "$os_name" = "Linux" ]; then
     read -r -p "❓ Git is not installed. Do you want to install it? [y/n] " response
     if [[ "$response" =~ ^[Yy]$ ]]; then
         echo -e "\n💪 Installing Git"
-        sudo apt-get install git-all -y
+        sudo apt-get install git -y
     else
       echo -e "\n👎 Git installation canceled.\n"
     fi
