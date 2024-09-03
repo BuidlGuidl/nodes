@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # Default values for the options
-e="geth"
-c="prysm"
+e="reth"
+c="lighthouse"
 
 # Help function to display usage information
 show_help() {
@@ -228,6 +228,7 @@ if [ ! -d "$HOME/buidlguidl-client" ]; then
   cd ~
   git clone https://github.com/BuidlGuidl/buidlguidl-client.git
   cd buidlguidl-client
+  git checkout v0.2.0-alpha
   yarn install
 else
   echo -e "\n⌛️ Updating buidlguidl-client repo"
