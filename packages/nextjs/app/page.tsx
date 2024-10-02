@@ -22,7 +22,7 @@ const Home: NextPage = () => {
         </div>
         <div className="pt-8">
           <h1 className="text-center">
-            <span className="block text-2xl mt-4">or run the client from the repo:</span>
+            <span className="block text-2xl mt-4">or run the client from the repo: </span>
             <span className="block text-2xl mb-2 mt-8"></span>
             <pre className="bg-black text-white p-8 rounded text-left">
               <code>{`
