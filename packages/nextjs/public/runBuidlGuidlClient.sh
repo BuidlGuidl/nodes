@@ -228,7 +228,7 @@ if [ ! -d "$HOME/buidlguidl-client" ]; then
   cd ~
   git clone https://github.com/BuidlGuidl/buidlguidl-client.git
   cd buidlguidl-client
-  git checkout v0.2.0-alpha
+  git checkout main
   yarn install
 else
   echo -e "\n⌛️ Updating buidlguidl-client repo"
