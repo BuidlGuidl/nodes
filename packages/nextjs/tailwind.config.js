@@ -75,7 +75,14 @@ module.exports = {
     ],
   },
   theme: {
+    // Extend Tailwind classes (e.g. font-bai-jamjuree, animate-grow)
     extend: {
+      fontFamily: {
+        chivo: ["Chivo Mono", "monospace"],
+      },
+      backgroundColor: {
+        skin: "#EBECFD",
+      },
       boxShadow: {
         center: "0 0 12px -2px rgb(0 0 0 / 0.05)",
       },

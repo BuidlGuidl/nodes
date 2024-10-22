@@ -10,15 +10,15 @@ const Home: NextPage = () => {
         {/* Introduction section */}
         <div className="bg-[#7877FF] p-10 lg:w-[45vw]">
           <div className="flex flex-col">
-            <p className="text-lg">
+            <p>
               A one line command to deploy and monitor an Ethereum Node, funded and maintained by BuidlGuidl members.
             </p>
-            <p className="text-lg">Mac/linux</p>
-            <code className="bg-black p-6 text-white">{`
+            <p>Mac/linux</p>
+            <code className="bg-black p-6 text-white text-base">{`
                     /bin/bash -c "$(curl -fsSL https://client.buidlguidl.com/runBuidlGuidlClient.sh)"
                   `}</code>
-            <p className="text-lg">or run the client from the repo:</p>
-            <code className="bg-black p-6 text-white">{`
+            <p> or run the client from the repo:</p>
+            <code className="bg-black p-6 text-white text-base">{`
                     git clone https://github.com/BuidlGuidl/buidlguidl-client.git
                     cd buidlguidl-client
                     yarn install
