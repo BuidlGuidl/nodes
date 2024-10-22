@@ -42,9 +42,9 @@ const Home: NextPage = () => {
       <div className="flex flex-row flex-wrap lg:flex-nowrap mb-10">
         {/* Map section */}
         <div className="bg-[#F6F6F6] p-10">
-          <div className="flex flex-row items-center gap-3">
+          <div className="flex flex-row items-center gap-4">
             <h1 className="text-lg">📡 Clients running</h1>
-            <img src="live-tag.svg" alt="live tag" className="w-16" />
+            <img src="live-tag.svg" alt="live tag" className="w-16 animate-pulse-fast mb-1.5" />
           </div>
           <div className="flex items-center justify-center pt-10">
             <img src="map.png" alt="map" className="w-auto" />
