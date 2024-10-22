@@ -12,7 +12,7 @@
 
 body {
   @apply font-chivo;
-  @apply text-lg;
+  @apply text-base;
   @apply tracking-tight;
   min-height: 100vh;
 }
@@ -27,10 +27,6 @@ h4 {
 
 p {
   margin: 1rem 0;
-}
-
-.btn {
-  @apply shadow-md;
 }
 
 .btn.btn-ghost {

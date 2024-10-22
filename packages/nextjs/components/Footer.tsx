@@ -7,8 +7,12 @@ import { HeartIcon } from "@heroicons/react/24/solid";
 export const Footer = () => {
   return (
     <div className="min-h-0 px-1 mb-6 lg:mb-6">
-      <div className="w-full">
+      <div className="w-full flex flex-row">
+        <div>
+          <img src="crosses-1.svg" alt="crosses" className="w-[300px]" />
+        </div>
         <ul className="menu menu-horizontal w-full">
+          {/* Footer links */}
           <div className="flex justify-center items-center gap-2 text-sm w-full">
             <div className="text-center">
               <a href="https://github.com/BuidlGuidl/nodes" target="_blank" rel="noreferrer" className="link">
@@ -37,6 +41,9 @@ export const Footer = () => {
             </div>
           </div>
         </ul>
+        <div>
+          <img src="crosses-2.svg" alt="crosses" className="w-[300px]" />
+        </div>
       </div>
     </div>
   );

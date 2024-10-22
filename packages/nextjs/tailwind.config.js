@@ -34,9 +34,6 @@ module.exports = {
           ".link": {
             textUnderlineOffset: "2px",
           },
-          ".link:hover": {
-            opacity: "80%",
-          },
         },
       },
       {
@@ -66,9 +63,6 @@ module.exports = {
           },
           ".link": {
             textUnderlineOffset: "2px",
-          },
-          ".link:hover": {
-            opacity: "80%",
           },
         },
       },
