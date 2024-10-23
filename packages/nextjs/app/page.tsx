@@ -6,9 +6,9 @@ const Home: NextPage = () => {
   return (
     <>
       {/* First row */}
-      <div className="flex flex-row flex-wrap lg:flex-nowrap mt-10">
+      <div className="flex flex-row flex-wrap lg:flex-nowrap">
         {/* Introduction section */}
-        <section className="bg-[#7877FF] p-10 lg:w-[45vw]">
+        <section className="bg-[#df57c4] p-10 lg:w-[45vw]">
           <div className="flex flex-col">
             <p>
               A one line command to deploy and monitor an Ethereum Node, funded and maintained by BuidlGuidl members.
