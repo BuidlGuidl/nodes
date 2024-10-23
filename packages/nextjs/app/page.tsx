@@ -46,8 +46,29 @@ const Home: NextPage = () => {
             <h1 className="text-lg">📡 Clients running</h1>
             <img src="live-tag.svg" alt="live tag" className="w-16 animate-pulse-fast mb-1.5" />
           </div>
-          <div className="flex items-center justify-center pt-10">
+          <div className="relative flex items-center justify-center pt-10">
             <img src="map.png" alt="map" className="w-auto" />
+            {/* Continent tags */}
+            <div className="text-sm lg:text-base flex items-center justify-center">
+              <div className="bg-[#f359d4] px-3 leading-none absolute top-[90px] right-[300px] lg:top-[110px] lg:right-[300px]">
+                <p className="text-center whitespace-nowrap">europe (10)</p>
+              </div>
+              <div className="bg-[#f359d4] px-3 leading-none absolute top-[140px] right-[140px] lg:top-[160px] lg:right-[160px]">
+                <p className="text-center whitespace-nowrap">asia (10)</p>
+              </div>
+              <div className="bg-[#f359d4] px-3 leading-none absolute top-[120px] left-[80px] lg:top-[140px] lg:left-[70px]">
+                <p className="text-center whitespace-nowrap">north america (10)</p>
+              </div>
+              <div className="bg-[#f359d4] px-3 leading-none absolute bottom-[80px] left-[140px] lg:bottom-[80px] lg:left-[160px]">
+                <p className="text-center whitespace-nowrap">south america (10)</p>
+              </div>
+              <div className="bg-[#f359d4] px-3 leading-none absolute bottom-[120px] left-[350px] lg:bottom-[170px] lg:left-[400px]">
+                <p className="text-center whitespace-nowrap">africa (10)</p>
+              </div>
+              <div className="bg-[#f359d4] px-3 leading-none absolute bottom-[70px] right-[60px] lg:bottom-[60px] lg:right-[30px]">
+                <p className="text-center whitespace-nowrap">australia (10)</p>
+              </div>
+            </div>
           </div>
         </section>
 
