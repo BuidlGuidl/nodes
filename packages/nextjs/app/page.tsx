@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import { NextPage } from "next";
 
 interface ContinentData {
@@ -55,12 +56,12 @@ const Home: NextPage = () => {
 
         {/* Screenshot section */}
         <section className="bg-[#DDDDDD] flex-1 p-8 flex justify-center border-x-[1px] border-b-[1px] border-black lg:border-b-0">
-          <img src="screenshot-2.png" alt="screenshot" className="object-contain" />
+          <Image src="/screenshot-2.png" alt="screenshot" className="object-contain" width={500} height={500} />
         </section>
 
         {/* Satellite section */}
         <section className="bg-[#20F658] p-6 w-[40vw] lg:flex-1 flex justify-center border-r-[1px] border-b-[1px] border-black lg:border-r-0 lg:border-b-0">
-          <img src="satellite-10fps.gif" alt="satellite" className="object-contain" />
+          <Image src="/satellite-10fps.gif" alt="satellite" className="object-contain" width={500} height={500} />
         </section>
       </div>
 
@@ -70,10 +71,16 @@ const Home: NextPage = () => {
         <section className="bg-[#F6F6F6] p-10 border-x-[1px] border-black lg:border-b-[1px]">
           <div className="flex flex-row items-center gap-4">
             <h1 className="text-lg">📡 Clients running</h1>
-            <img src="live-tag.svg" alt="live tag" className="w-16 animate-pulse-fast mb-1.5" />
+            <Image
+              src="/live-tag.svg"
+              alt="live tag"
+              className="w-16 animate-pulse-fast mb-1.5"
+              width={500}
+              height={500}
+            />
           </div>
           <div className="relative flex items-center justify-center pt-10">
-            <img src="map.png" alt="map" className="w-auto" />
+            <Image src="/map.png" alt="map" className="w-auto" width={2000} height={2000} />
             {/* Continent tags */}
             <div className="text-sm lg:text-base flex items-center justify-center">
               <div className="bg-[#f359d4] px-3 leading-none absolute top-[90px] right-[200px] md:top-[100px] md:right-[280px] lg:top-[130px] lg:right-[420px]">

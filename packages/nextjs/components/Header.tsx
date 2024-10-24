@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Image from "next/image";
 import { FaucetButton, RainbowKitCustomConnectButton } from "~~/components/scaffold-eth";
 
 /**
@@ -18,7 +19,7 @@ export const Header = () => {
       {/* Logo div with mix-blend-exclusion */}
       <div className="fixed top-6 left-[70px] z-30 mix-blend-difference">
         <div>
-          <img src="client-logo.svg" alt="logo" />
+          <Image src="client-logo.svg" alt="logo" width={260} height={78} />
         </div>
       </div>
 
