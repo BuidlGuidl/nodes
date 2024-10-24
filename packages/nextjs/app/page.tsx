@@ -29,7 +29,7 @@ const Home: NextPage = () => {
 
         {/* Screenshot section */}
         <section className="bg-[#DDDDDD] flex-1 p-8 flex justify-center">
-          <img src="computer-screenshot.png" alt="screenshot" className="object-contain" />
+          <img src="screenshot-2.png" alt="screenshot" className="object-contain" />
         </section>
 
         {/* Satellite section */}
