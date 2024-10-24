@@ -33,7 +33,3 @@ p {
 .btn.btn-ghost {
   @apply shadow-none;
 }
-
-section {
-  @apply border-[1px] border-black;
-}

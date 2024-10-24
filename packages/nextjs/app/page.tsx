@@ -1,14 +1,40 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { NextPage } from "next";
 
+interface ContinentData {
+  "North America": number;
+  "South America": number;
+  Europe: number;
+  Asia: number;
+  Africa: number;
+  Australia: number;
+}
+
 const Home: NextPage = () => {
+  const [continentData, setContinentData] = useState<ContinentData | null>(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch("https://rpc.buidlguidl.com:48544/nodecontinents");
+        const data = await response.json();
+        setContinentData(data.continents);
+      } catch (error) {
+        console.error("Error fetching continent data:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
   return (
     <>
       {/* First row */}
-      <div className="flex flex-row flex-wrap lg:flex-nowrap">
+      <div className="flex flex-row flex-wrap lg:flex-nowrap lg:border-x-[1px] lg:border-y-[1px] border-black">
         {/* Introduction section */}
-        <section className="bg-[#df57c4] p-10 lg:w-[45vw]">
+        <section className="bg-[#df57c4] p-10 lg:w-[45vw] border-x-[1px] border-y-[1px] border-black lg:border-none">
           <div className="flex flex-col">
             <p>
               A one line command to deploy and monitor an Ethereum Node, funded and maintained by BuidlGuidl members.
@@ -28,20 +54,20 @@ const Home: NextPage = () => {
         </section>
 
         {/* Screenshot section */}
-        <section className="bg-[#DDDDDD] flex-1 p-8 flex justify-center">
-          <img src="computer-screenshot.png" alt="screenshot" className="object-contain" />
+        <section className="bg-[#DDDDDD] flex-1 p-8 flex justify-center border-x-[1px] border-b-[1px] border-black lg:border-b-0">
+          <img src="screenshot-2.png" alt="screenshot" className="object-contain" />
         </section>
 
         {/* Satellite section */}
-        <section className="bg-[#12D855] p-6 w-[40vw] lg:flex-1 flex justify-center">
-          <img src="satellite-test.png" alt="satellite" className="object-contain" />
+        <section className="bg-[#20F658] p-6 w-[40vw] lg:flex-1 flex justify-center border-r-[1px] border-b-[1px] border-black lg:border-r-0 lg:border-b-0">
+          <img src="satellite-10fps.gif" alt="satellite" className="object-contain" />
         </section>
       </div>
 
       {/* Second row */}
       <div className="flex flex-row flex-wrap lg:flex-nowrap mb-10">
         {/* Map section */}
-        <section className="bg-[#F6F6F6] p-10">
+        <section className="bg-[#F6F6F6] p-10 border-x-[1px] border-black lg:border-b-[1px]">
           <div className="flex flex-row items-center gap-4">
             <h1 className="text-lg">📡 Clients running</h1>
             <img src="live-tag.svg" alt="live tag" className="w-16 animate-pulse-fast mb-1.5" />
@@ -50,23 +76,27 @@ const Home: NextPage = () => {
             <img src="map.png" alt="map" className="w-auto" />
             {/* Continent tags */}
             <div className="text-sm lg:text-base flex items-center justify-center">
-              <div className="bg-[#f359d4] px-3 leading-none absolute top-[90px] right-[300px] lg:top-[110px] lg:right-[300px]">
-                <p className="text-center whitespace-nowrap">europe (10)</p>
+              <div className="bg-[#f359d4] px-3 leading-none absolute top-[90px] right-[200px] md:top-[100px] md:right-[280px] lg:top-[130px] lg:right-[420px]">
+                <p className="text-center whitespace-nowrap">europe ({continentData?.Europe ?? "..."})</p>
               </div>
-              <div className="bg-[#f359d4] px-3 leading-none absolute top-[140px] right-[140px] lg:top-[160px] lg:right-[160px]">
-                <p className="text-center whitespace-nowrap">asia (10)</p>
+              <div className="bg-[#f359d4] px-3 leading-none absolute top-[120px] right-[80px] md:top-[130px] md:right-[120px] lg:top-[170px] lg:right-[220px]">
+                <p className="text-center whitespace-nowrap">asia ({continentData?.Asia ?? "..."})</p>
               </div>
-              <div className="bg-[#f359d4] px-3 leading-none absolute top-[120px] left-[80px] lg:top-[140px] lg:left-[70px]">
-                <p className="text-center whitespace-nowrap">north america (10)</p>
+              <div className="bg-[#f359d4] px-3 leading-none absolute top-[100px] left-[30px] md:top-[130px] md:left-[60px] lg:top-[170px] lg:left-[120px]">
+                <p className="text-center whitespace-nowrap">
+                  north america ({continentData?.["North America"] ?? "..."})
+                </p>
               </div>
-              <div className="bg-[#f359d4] px-3 leading-none absolute bottom-[80px] left-[140px] lg:bottom-[80px] lg:left-[160px]">
-                <p className="text-center whitespace-nowrap">south america (10)</p>
+              <div className="bg-[#f359d4] px-3 leading-none absolute bottom-[40px] left-[100px] md:bottom-[80px] md:left-[160px] lg:bottom-[120px] lg:left-[220px]">
+                <p className="text-center whitespace-nowrap">
+                  south america ({continentData?.["South America"] ?? "..."})
+                </p>
               </div>
-              <div className="bg-[#f359d4] px-3 leading-none absolute bottom-[120px] left-[350px] lg:bottom-[170px] lg:left-[400px]">
-                <p className="text-center whitespace-nowrap">africa (10)</p>
+              <div className="bg-[#f359d4] px-3 leading-none absolute bottom-[100px] left-[220px] md:bottom-[140px] md:left-[320px] lg:bottom-[190px] lg:left-[490px]">
+                <p className="text-center whitespace-nowrap">africa ({continentData?.Africa ?? "..."})</p>
               </div>
-              <div className="bg-[#f359d4] px-3 leading-none absolute bottom-[70px] right-[60px] lg:bottom-[60px] lg:right-[30px]">
-                <p className="text-center whitespace-nowrap">australia (10)</p>
+              <div className="bg-[#f359d4] px-3 leading-none absolute bottom-[30px] right-[30px] lg:bottom-[80px] lg:right-[60px]">
+                <p className="text-center whitespace-nowrap">australia ({continentData?.Australia ?? "..."})</p>
               </div>
             </div>
           </div>
