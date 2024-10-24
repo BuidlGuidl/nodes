@@ -6,9 +6,9 @@ const Home: NextPage = () => {
   return (
     <>
       {/* First row */}
-      <div className="flex flex-row flex-wrap lg:flex-nowrap">
+      <div className="flex flex-row flex-wrap lg:flex-nowrap lg:border-x-[1px] lg:border-y-[1px] border-black">
         {/* Introduction section */}
-        <section className="bg-[#df57c4] p-10 lg:w-[45vw]">
+        <section className="bg-[#df57c4] p-10 lg:w-[45vw] border-x-[1px] border-y-[1px] border-black lg:border-none">
           <div className="flex flex-col">
             <p>
               A one line command to deploy and monitor an Ethereum Node, funded and maintained by BuidlGuidl members.
@@ -28,12 +28,12 @@ const Home: NextPage = () => {
         </section>
 
         {/* Screenshot section */}
-        <section className="bg-[#DDDDDD] flex-1 p-8 flex justify-center">
+        <section className="bg-[#DDDDDD] flex-1 p-8 flex justify-center border-x-[1px] border-b-[1px] border-black lg:border-b-0">
           <img src="screenshot-2.png" alt="screenshot" className="object-contain" />
         </section>
 
         {/* Satellite section */}
-        <section className="bg-[#12D855] p-6 w-[40vw] lg:flex-1 flex justify-center">
+        <section className="bg-[#12D855] p-6 w-[40vw] lg:flex-1 flex justify-center border-r-[1px] border-b-[1px] border-black lg:border-r-0 lg:border-b-0">
           <img src="satellite-test.png" alt="satellite" className="object-contain" />
         </section>
       </div>
@@ -41,7 +41,7 @@ const Home: NextPage = () => {
       {/* Second row */}
       <div className="flex flex-row flex-wrap lg:flex-nowrap mb-10">
         {/* Map section */}
-        <section className="bg-[#F6F6F6] p-10">
+        <section className="bg-[#F6F6F6] p-10 border-x-[1px] border-black lg:border-b-[1px]">
           <div className="flex flex-row items-center gap-4">
             <h1 className="text-lg">📡 Clients running</h1>
             <img src="live-tag.svg" alt="live tag" className="w-16 animate-pulse-fast mb-1.5" />
