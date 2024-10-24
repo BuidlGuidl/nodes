@@ -9,7 +9,7 @@ export const Footer = () => {
     <div className="min-h-0 px-1 mb-6 lg:mb-6">
       <div className="w-full flex flex-row">
         <div>
-          <img src="crosses-1.svg" alt="crosses" className="w-[300px]" />
+          <img src="crosses-1.svg" alt="crosses" className="w-[300px] lg:w-[500px]" />
         </div>
         <ul className="menu menu-horizontal w-full">
           {/* Footer links */}
@@ -42,7 +42,7 @@ export const Footer = () => {
           </div>
         </ul>
         <div>
-          <img src="crosses-2.svg" alt="crosses" className="w-[300px]" />
+          <img src="crosses-2.svg" alt="crosses" className="w-[300px] lg:w-[500px]" />
         </div>
       </div>
     </div>
