@@ -1,8 +1,34 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { NextPage } from "next";
 
+interface ContinentData {
+  "North America": number;
+  "South America": number;
+  Europe: number;
+  Asia: number;
+  Africa: number;
+  Australia: number;
+}
+
 const Home: NextPage = () => {
+  const [continentData, setContinentData] = useState<ContinentData | null>(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch("https://rpc.buidlguidl.com:48544/nodecontinents");
+        const data = await response.json();
+        setContinentData(data.continents);
+      } catch (error) {
+        console.error("Error fetching continent data:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
   return (
     <>
       {/* First row */}
@@ -51,22 +77,26 @@ const Home: NextPage = () => {
             {/* Continent tags */}
             <div className="text-sm lg:text-base flex items-center justify-center">
               <div className="bg-[#f359d4] px-3 leading-none absolute top-[90px] right-[200px] md:top-[100px] md:right-[280px] lg:top-[130px] lg:right-[420px]">
-                <p className="text-center whitespace-nowrap">europe (10)</p>
+                <p className="text-center whitespace-nowrap">europe ({continentData?.Europe ?? "..."})</p>
               </div>
               <div className="bg-[#f359d4] px-3 leading-none absolute top-[120px] right-[80px] md:top-[130px] md:right-[120px] lg:top-[170px] lg:right-[220px]">
-                <p className="text-center whitespace-nowrap">asia (10)</p>
+                <p className="text-center whitespace-nowrap">asia ({continentData?.Asia ?? "..."})</p>
               </div>
               <div className="bg-[#f359d4] px-3 leading-none absolute top-[100px] left-[30px] md:top-[130px] md:left-[60px] lg:top-[170px] lg:left-[120px]">
-                <p className="text-center whitespace-nowrap">north america (10)</p>
+                <p className="text-center whitespace-nowrap">
+                  north america ({continentData?.["North America"] ?? "..."})
+                </p>
               </div>
               <div className="bg-[#f359d4] px-3 leading-none absolute bottom-[40px] left-[100px] md:bottom-[80px] md:left-[160px] lg:bottom-[120px] lg:left-[220px]">
-                <p className="text-center whitespace-nowrap">south america (10)</p>
+                <p className="text-center whitespace-nowrap">
+                  south america ({continentData?.["South America"] ?? "..."})
+                </p>
               </div>
               <div className="bg-[#f359d4] px-3 leading-none absolute bottom-[100px] left-[220px] md:bottom-[140px] md:left-[320px] lg:bottom-[190px] lg:left-[490px]">
-                <p className="text-center whitespace-nowrap">africa (10)</p>
+                <p className="text-center whitespace-nowrap">africa ({continentData?.Africa ?? "..."})</p>
               </div>
               <div className="bg-[#f359d4] px-3 leading-none absolute bottom-[30px] right-[30px] lg:bottom-[80px] lg:right-[60px]">
-                <p className="text-center whitespace-nowrap">australia (10)</p>
+                <p className="text-center whitespace-nowrap">australia ({continentData?.Australia ?? "..."})</p>
               </div>
             </div>
           </div>
