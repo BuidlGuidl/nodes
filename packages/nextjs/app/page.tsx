@@ -3,6 +3,8 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import { NextPage } from "next";
+import liveTag from "~~/public/live-tag.svg";
+import map from "~~/public/map.png";
 
 interface ContinentData {
   "North America": number;
@@ -31,94 +33,92 @@ const Home: NextPage = () => {
   }, []);
 
   return (
-    <>
+    <div className="container mx-auto">
       {/* First row */}
       <div className="flex flex-row flex-wrap lg:flex-nowrap lg:border-x-[1px] lg:border-y-[1px] border-black">
         {/* Introduction section */}
-        <section className="bg-[#df57c4] p-10 lg:w-[45vw] border-x-[1px] border-y-[1px] border-black lg:border-none">
+        <section className="bg-[#df57c4] p-6 lg:p-10 lg:w-[45vw] border-x-[1px] border-y-[1px] border-black lg:border-none overflow-auto">
           <div className="flex flex-col">
-            <p>
+            <p className="mt-0">
               A one line command to deploy and monitor an Ethereum Node, funded and maintained by BuidlGuidl members.
             </p>
-            <p>Mac/linux</p>
-            <code className="bg-black p-6 text-white text-base">{`
-                    /bin/bash -c "$(curl -fsSL https://client.buidlguidl.com/runBuidlGuidlClient.sh)"
-                  `}</code>
+            <p className="mt-0">Mac/linux</p>
+            <div className="bg-black p-2 lg:p-4 text-white text-sm overflow-auto">
+              <p className="m-2">
+                /bin/bash -c &quot;$(curl -fsSL https://client.buidlguidl.com/runBuidlGuidlClient.sh)&quot;
+              </p>
+            </div>
             <p> or run the client from the repo:</p>
-            <code className="bg-black p-6 text-white text-base">{`
-                    git clone https://github.com/BuidlGuidl/buidlguidl-client.git
-                    cd buidlguidl-client
-                    yarn install
-                    node index.js
-                  `}</code>
+            <div className="bg-black p-2 lg:p-4 text-white text-sm overflow-auto">
+              <p className="m-2 whitespace-nowrap">git clone https://github.com/BuidlGuidl/buidlguidl-client.git</p>
+              <p className="m-2">cd buidlguidl-client</p>
+              <p className="m-2">yarn install</p>
+              <p className="m-2">node index.js</p>
+            </div>
           </div>
         </section>
 
         {/* Screenshot section */}
-        <section className="bg-[#DDDDDD] flex-1 p-8 flex justify-center border-x-[1px] border-b-[1px] border-black lg:border-b-0">
-          <Image src="/screenshot-2.png" alt="screenshot" className="object-contain" width={500} height={500} />
+        <section className="bg-[#DDDDDD] flex-1 p-6 flex justify-center border-x-[1px] border-b-[1px] border-black lg:border-b-0">
+          <Image src="/screenshot-2.png" alt="screenshot" className="object-contain" width={972} height={875} />
         </section>
 
         {/* Satellite section */}
         <section className="bg-[#20F658] p-6 w-[40vw] lg:flex-1 flex justify-center border-r-[1px] border-b-[1px] border-black lg:border-r-0 lg:border-b-0">
-          <Image src="/satellite-10fps.gif" alt="satellite" className="object-contain" width={500} height={500} />
+          <Image src="/satellite-10fps.gif" alt="satellite" className="object-contain" width={436} height={535} />
         </section>
       </div>
 
       {/* Second row */}
-      <div className="flex flex-row flex-wrap lg:flex-nowrap mb-10">
+      <div className="lg:grid lg:grid-cols-3 mb-10">
         {/* Map section */}
-        <section className="bg-[#F6F6F6] p-10 border-x-[1px] border-black lg:border-b-[1px]">
+        <section className="col-span-2 bg-[#F6F6F6] p-6 lg:p-10 border-x-[1px] border-black lg:border-b-[1px]">
           <div className="flex flex-row items-center gap-4">
-            <h1 className="text-lg">📡 Clients running</h1>
-            <Image
-              src="/live-tag.svg"
-              alt="live tag"
-              className="w-16 animate-pulse-fast mb-1.5"
-              width={500}
-              height={500}
-            />
+            <h1 className="text-lg m-0">📡 Clients running</h1>
+            <Image src={liveTag} alt="live tag" className="w-16 animate-pulse-fast" />
           </div>
           <div className="relative flex items-center justify-center pt-10">
-            <Image src="/map.png" alt="map" className="w-auto" width={2000} height={2000} />
+            <Image src={map} alt="map" />
             {/* Continent tags */}
-            <div className="text-sm lg:text-base flex items-center justify-center">
-              <div className="bg-[#f359d4] px-3 leading-none absolute top-[90px] right-[200px] md:top-[100px] md:right-[280px] lg:top-[130px] lg:right-[420px]">
-                <p className="text-center whitespace-nowrap">europe ({continentData?.Europe ?? "..."})</p>
+            <div className="text-xs md:text-sm lg:text-base flex items-center justify-center">
+              <div className="bg-[#f359d4] lg:px-3 leading-none absolute top-[26%] right-[33%] lg:right-[37%]">
+                <p className="m-2 xl:my-3 text-center whitespace-nowrap">europe ({continentData?.Europe ?? "..."})</p>
               </div>
-              <div className="bg-[#f359d4] px-3 leading-none absolute top-[120px] right-[80px] md:top-[130px] md:right-[120px] lg:top-[170px] lg:right-[220px]">
-                <p className="text-center whitespace-nowrap">asia ({continentData?.Asia ?? "..."})</p>
+              <div className="bg-[#f359d4] lg:px-3 leading-none absolute top-[35%] right-[14%] xl:right-[18%] lg:top-[30%]">
+                <p className="m-2 xl:my-3 text-center whitespace-nowrap">asia ({continentData?.Asia ?? "..."})</p>
               </div>
-              <div className="bg-[#f359d4] px-3 leading-none absolute top-[100px] left-[30px] md:top-[130px] md:left-[60px] lg:top-[170px] lg:left-[120px]">
-                <p className="text-center whitespace-nowrap">
+              <div className="bg-[#f359d4] lg:px-3 leading-none absolute top-[32%] left-[5%] lg:left-[6%] xl:left-[9%]">
+                <p className="m-2 xl:my-3 text-center whitespace-nowrap">
                   north america ({continentData?.["North America"] ?? "..."})
                 </p>
               </div>
-              <div className="bg-[#f359d4] px-3 leading-none absolute bottom-[40px] left-[100px] md:bottom-[80px] md:left-[160px] lg:bottom-[120px] lg:left-[220px]">
-                <p className="text-center whitespace-nowrap">
+              <div className="bg-[#f359d4] lg:px-3 leading-none absolute bottom-[20%] left-[15%] xl:left-[20%]">
+                <p className="m-2 xl:my-3 text-center whitespace-nowrap">
                   south america ({continentData?.["South America"] ?? "..."})
                 </p>
               </div>
-              <div className="bg-[#f359d4] px-3 leading-none absolute bottom-[100px] left-[220px] md:bottom-[140px] md:left-[320px] lg:bottom-[190px] lg:left-[490px]">
-                <p className="text-center whitespace-nowrap">africa ({continentData?.Africa ?? "..."})</p>
+              <div className="bg-[#f359d4] lg:px-3 leading-none absolute bottom-[35%] left-[43%] lg:left-[45%]">
+                <p className="m-2 xl:my-3 text-center whitespace-nowrap">africa ({continentData?.Africa ?? "..."})</p>
               </div>
-              <div className="bg-[#f359d4] px-3 leading-none absolute bottom-[30px] right-[30px] lg:bottom-[80px] lg:right-[60px]">
-                <p className="text-center whitespace-nowrap">australia ({continentData?.Australia ?? "..."})</p>
+              <div className="bg-[#f359d4] lg:px-3 leading-none absolute bottom-[10%] right-[5%] lg:bottom-[13%]">
+                <p className="m-2 xl:my-3 text-center whitespace-nowrap">
+                  australia ({continentData?.Australia ?? "..."})
+                </p>
               </div>
             </div>
           </div>
         </section>
 
         {/* Docs section */}
-        <section className="bg-black p-10 lg:w-[30vw] w-full text-white">
+        <section className="bg-black p-6 lg:p-10 text-white">
           <h1 className="text-lg">Useful links | Docs</h1>
-          <ul className="list-disc list-outside flex flex-col m-auto lg:mx-0 pl-8 lg:pl-4 ">
-            <li>
+          <ul className="list-disc list-outside pl-4">
+            <li className="my-4">
               <a href="https://docs.rocketpool.net/guides/node/local/hardware" className="link">
                 On how to select hardware
               </a>
             </li>
-            <li>
+            <li className="my-4">
               <a href="https://gist.github.com/yorickdowne/f3a3e79a573bf35767cd002cc977b038" className="link">
                 All about how to buy the correct drive
               </a>
@@ -126,7 +126,7 @@ const Home: NextPage = () => {
           </ul>
         </section>
       </div>
-    </>
+    </div>
   );
 };
 
