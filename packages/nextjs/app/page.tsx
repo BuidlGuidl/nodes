@@ -39,9 +39,7 @@ const Home: NextPage = () => {
         {/* Introduction section */}
         <section className="bg-[#df57c4] p-6 lg:p-10 lg:w-[45vw] border-x-[1px] border-y-[1px] border-black lg:border-none overflow-auto">
           <div className="flex flex-col">
-            <p className="mt-0">
-              A one line command to deploy and monitor an Ethereum Node, funded and maintained by BuidlGuidl members.
-            </p>
+            <p className="mt-0">Run an Ethereum node with a single command:</p>
             <p className="mt-0">Mac/linux</p>
             <div className="bg-black p-2 lg:p-4 text-white text-sm overflow-auto">
               <p className="m-2">
