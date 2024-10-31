@@ -113,22 +113,12 @@ const Home: NextPage = () => {
           <h1 className="text-lg">Useful links | Docs</h1>
           <ul className="list-disc list-outside pl-4">
             <li className="my-4">
-              <a
-                href="https://docs.rocketpool.net/guides/node/local/hardware"
-                className="link"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
+              <a href="https://docs.rocketpool.net/guides/node/local/hardware" className="link">
                 On how to select hardware
               </a>
             </li>
             <li className="my-4">
-              <a
-                href="https://gist.github.com/yorickdowne/f3a3e79a573bf35767cd002cc977b038"
-                className="link"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
+              <a href="https://gist.github.com/yorickdowne/f3a3e79a573bf35767cd002cc977b038" className="link">
                 All about how to buy the correct drive
               </a>
             </li>
