@@ -237,5 +237,6 @@ else
 fi
 
 cd "$HOME/buidlguidl-client"
+yarn install
 node index.js
 
