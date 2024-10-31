@@ -35,16 +35,14 @@ const Home: NextPage = () => {
   return (
     <div className="container mx-auto">
       {/* First row */}
-      <div className="flex flex-row flex-wrap lg:flex-nowrap lg:border-x-[1px] lg:border-y-[1px] border-black">
+      <div className="flex flex-col lg:flex-row lg:border-x-[1px] lg:border-y-[1px] border-black">
         {/* Introduction section */}
-        <section className="bg-[#df57c4] p-6 lg:p-10 lg:w-[45vw] border-x-[1px] border-y-[1px] border-black lg:border-none overflow-auto">
+        <section className="bg-[#df57c4] p-6 lg:p-10 w-full lg:w-[45vw] border-x-[1px] border-y-[1px] border-black lg:border-none overflow-auto">
           <div className="flex flex-col">
             <p className="mt-0">Run an Ethereum node with a single command:</p>
             <p className="mt-0">Mac/linux</p>
             <div className="bg-black p-2 lg:p-4 text-white text-sm overflow-auto">
-              <p className="m-2">
-                /bin/bash -c &quot;$(curl -fsSL https://client.buidlguidl.com/runBuidlGuidlClient.sh)&quot;
-              </p>
+              <p className="m-2">/bin/bash -c &quot;$(curl -fsSL https://bgclient.io)&quot;</p>
             </div>
             <p> or run the client from the repo:</p>
             <div className="bg-black p-2 lg:p-4 text-white text-sm overflow-auto">
@@ -56,15 +54,18 @@ const Home: NextPage = () => {
           </div>
         </section>
 
-        {/* Screenshot section */}
-        <section className="bg-[#DDDDDD] flex-1 p-6 flex justify-center border-x-[1px] border-b-[1px] border-black lg:border-b-0">
-          <Image src="/screenshot-2.png" alt="screenshot" className="object-contain" width={972} height={875} />
-        </section>
+        {/* Second row for mobile - flex row to make sections share the row */}
+        <div className="flex flex-row flex-1">
+          {/* Screenshot section */}
+          <section className="bg-[#DDDDDD] w-7/12 lg:flex-1 p-6 flex justify-center border-x-[1px] border-b-[1px] border-black lg:border-b-0">
+            <Image src="/screenshot-2.png" alt="screenshot" className="object-contain" width={972} height={875} />
+          </section>
 
-        {/* Satellite section */}
-        <section className="bg-[#20F658] p-6 w-[40vw] lg:flex-1 flex justify-center border-r-[1px] border-b-[1px] border-black lg:border-r-0 lg:border-b-0">
-          <Image src="/satellite-10fps.gif" alt="satellite" className="object-contain" width={436} height={535} />
-        </section>
+          {/* Satellite section */}
+          <section className="bg-[#20F658] p-6 w-5/12 lg:flex-1 flex justify-center border-r-[1px] border-b-[1px] border-black lg:border-r-0 lg:border-l-0 lg:border-b-0">
+            <Image src="/satellite-10fps.gif" alt="satellite" className="object-contain" width={436} height={535} />
+          </section>
+        </div>
       </div>
 
       {/* Second row */}

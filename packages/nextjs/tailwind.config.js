@@ -84,6 +84,9 @@ module.exports = {
         "pulse-fast": "pulse 1.5s cubic-bezier(.57,.21,.69,1.25) infinite",
         "animate-ping": "ping 1s ease-in-out infinite",
       },
+      screens: {
+        lg: "1145px",
+      },
     },
   },
 };
