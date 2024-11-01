@@ -60,7 +60,7 @@ const Home: NextPage = () => {
           {/* Screenshot section */}
           <section className="bg-[#DDDDDD] w-7/12 lg:flex-1 p-6 flex justify-center border-x-[1px] border-b-[1px] border-black lg:border-b-0">
             <Image
-              src="/screenshot-2.png"
+              src="/screenshot-3.png"
               alt="screenshot"
               className="object-contain cursor-pointer"
               width={972}
