@@ -50,8 +50,8 @@ while getopts ":e:c:h" opt; do
   esac
 done
 
-echo "🕸 Execution client selected: $e"
-echo -e "🕸 Consensus client selected: $c\n"
+echo "🎛️ Execution client selected: $e"
+echo -e "🎛️ Consensus client selected: $c\n"
 
 os_name=$(uname -s)
 
@@ -234,9 +234,9 @@ else
   echo -e "\n⌛️ Updating buidlguidl-client repo"
   cd "$HOME/buidlguidl-client"
   git pull
+  yarn install
 fi
 
 cd "$HOME/buidlguidl-client"
-yarn install
 node index.js
 
