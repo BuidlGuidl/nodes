@@ -17,6 +17,7 @@ interface ContinentData {
 
 const Home: NextPage = () => {
   const [continentData, setContinentData] = useState<ContinentData | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -58,7 +59,14 @@ const Home: NextPage = () => {
         <div className="flex flex-row flex-1">
           {/* Screenshot section */}
           <section className="bg-[#DDDDDD] w-7/12 lg:flex-1 p-6 flex justify-center border-x-[1px] border-b-[1px] border-black lg:border-b-0">
-            <Image src="/screenshot-2.png" alt="screenshot" className="object-contain" width={972} height={875} />
+            <Image
+              src="/screenshot-2.png"
+              alt="screenshot"
+              className="object-contain cursor-pointer"
+              width={972}
+              height={875}
+              onClick={() => setIsModalOpen(true)}
+            />
           </section>
 
           {/* Satellite section */}
@@ -125,6 +133,31 @@ const Home: NextPage = () => {
           </ul>
         </section>
       </div>
+
+      {/* Modal */}
+      {isModalOpen && (
+        <div
+          className="fixed inset-0 bg-black bg-opacity-85 z-50 flex items-center justify-center p-4"
+          onClick={() => setIsModalOpen(false)}
+        >
+          <div className="relative max-w-[90vw] max-h-[90vh]">
+            <Image
+              src="/screenshot-3-modal.png"
+              alt="screenshot"
+              className="object-contain"
+              width={2030}
+              height={1327}
+              onClick={e => e.stopPropagation()}
+            />
+            <button
+              className="absolute top-4 right-4 text-white bg-black bg-opacity-50 rounded-full w-8 h-8 flex items-center justify-center"
+              onClick={() => setIsModalOpen(false)}
+            >
+              ✕
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
