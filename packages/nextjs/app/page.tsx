@@ -121,13 +121,38 @@ const Home: NextPage = () => {
           <h1 className="text-lg">Useful links | Docs</h1>
           <ul className="list-disc list-outside pl-4">
             <li className="my-4">
+              <a href="https://github.com/BuidlGuidl/buidlguidl-client" className="link">
+                BuidlGuidl Client Repo
+              </a>
+            </li>
+            <li className="my-4">
               <a href="https://docs.rocketpool.net/guides/node/local/hardware" className="link">
-                On how to select hardware
+                Node Hardware Guide (Rocket Pool)
               </a>
             </li>
             <li className="my-4">
               <a href="https://gist.github.com/yorickdowne/f3a3e79a573bf35767cd002cc977b038" className="link">
-                All about how to buy the correct drive
+                SSD Selection Guide
+              </a>
+            </li>
+            <li className="my-4">
+              <a href="https://reth.rs/" className="link">
+                Reth Docs
+              </a>
+            </li>
+            <li className="my-4">
+              <a href="https://lighthouse-book.sigmaprime.io/" className="link">
+                Lighthouse Docs
+              </a>
+            </li>
+            <li className="my-4">
+              <a href="https://geth.ethereum.org/docs" className="link">
+                Geth Docs
+              </a>
+            </li>
+            <li className="my-4">
+              <a href="https://docs.prylabs.network/docs/getting-started" className="link">
+                Prysm Docs
               </a>
             </li>
           </ul>
