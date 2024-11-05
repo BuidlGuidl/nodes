@@ -224,19 +224,30 @@ if [ "$os_name" = "Darwin" ]; then
 fi
 
 if [ ! -d "$HOME/buidlguidl-client" ]; then
-  echo -e "\n🚀 Cloning buidlguidl-client repo"
-  cd ~
-  git clone https://github.com/BuidlGuidl/buidlguidl-client.git
-  cd buidlguidl-client
-  git checkout main
-  yarn install
+  echo -e "\n"
+  read -r -p "❓ Do you want to clone and run the buidlguidl-client repo? [y/n] " response
+  if [[ "$response" =~ ^[Yy]$ ]]; then
+    echo -e "\n🚀 Cloning buidlguidl-client repo"
+    cd ~
+    git clone https://github.com/BuidlGuidl/buidlguidl-client.git
+    cd buidlguidl-client
+    git checkout main
+    yarn install
+    node index.js
+  else
+    echo -e "\n👎 BuidlGuidl Client installation canceled.\n"
+  fi
 else
-  echo -e "\n⌛️ Updating buidlguidl-client repo"
-  cd "$HOME/buidlguidl-client"
-  git pull
-  yarn install
+  echo -e "\n"
+  read -r -p "❓ The buidlguidl-client repo is already cloned. Do you want to update and run it? [y/n] " response
+  if [[ "$response" =~ ^[Yy]$ ]]; then
+    echo -e "\n⌛️ Updating buidlguidl-client repo"
+    cd "$HOME/buidlguidl-client"
+    git pull
+    yarn install
+    node index.js
+  else
+    echo -e "\n👎 BuidlGuidl Client update canceled.\n"
+  fi
 fi
-
-cd "$HOME/buidlguidl-client"
-node index.js
 
