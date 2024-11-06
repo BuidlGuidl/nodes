@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Image from "next/image";
+import { useQuery } from "@tanstack/react-query";
 import { NextPage } from "next";
 import liveTag from "~~/public/live-tag.svg";
 import map from "~~/public/map.png";
@@ -16,22 +17,21 @@ interface ContinentData {
 }
 
 const Home: NextPage = () => {
-  const [continentData, setContinentData] = useState<ContinentData | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch("https://rpc.buidlguidl.com:48544/nodecontinents");
-        const data = await response.json();
-        setContinentData(data.continents);
-      } catch (error) {
-        console.error("Error fetching continent data:", error);
+  const { data: continentData } = useQuery<ContinentData>({
+    queryKey: ["continentData"],
+    queryFn: async () => {
+      const response = await fetch("https://rpc.buidlguidl.com:48544/nodecontinents");
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
       }
-    };
-
-    fetchData();
-  }, []);
+      const data = await response.json();
+      return data.continents as ContinentData;
+    },
+    refetchOnWindowFocus: true,
+    placeholderData: previousData => previousData,
+  });
 
   return (
     <div className="container mx-auto">
