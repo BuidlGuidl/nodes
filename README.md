@@ -1,6 +1,6 @@
 # 🛰️ buidlguidl nodes 
 
-deployed live: [https://nodes.buidlguidl.com](https://nodes.buidlguidl.com)
+deployed live: [https://client.buidlguidl.com/](https://client.buidlguidl.com/)
 
 > website for the buidlguidl nodes program
 
