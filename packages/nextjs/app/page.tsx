@@ -22,7 +22,7 @@ const Home: NextPage = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("https://rpc.buidlguidl.com:48544/nodecontinents");
+        const response = await fetch("https://mainnet.rpc.buidlguidl.com:48547/nodecontinents");
         const data = await response.json();
         setContinentData(data.continents);
       } catch (error) {
