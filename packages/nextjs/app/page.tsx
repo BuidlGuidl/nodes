@@ -102,7 +102,7 @@ const Home: NextPage = () => {
               .
             </p>
             <p className="mt-10">Start your BG Client with the --owner flag set to your eth address or ens:</p>
-            <div className="bg-black p-2 lg:p-4 text-white text-sm overflow-auto">
+            <div className="bg-black p-2 lg:p-4 mb-10 text-white text-sm overflow-auto">
               <p className="m-2">node index.js --owner &lt;address or ens&gt;</p>
             </div>
           </div>
