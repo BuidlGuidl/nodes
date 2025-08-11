@@ -77,9 +77,9 @@ const Home: NextPage = () => {
       </div>
 
       {/* Second row */}
-      <div className="lg:grid lg:grid-cols-3">
+      <div className="lg:grid lg:grid-cols-3 lg:border-x-[1px] lg:border-black">
         {/* Map section */}
-        <section className="bg-[#DDDDDD] col-span-2 p-6 lg:p-10 border-x-[1px] border-black lg:border-b-[1px]">
+        <section className="bg-[#DDDDDD] col-span-2 p-6 lg:p-10 border-x-[1px] border-black lg:border-x-0 lg:border-b-[1px] lg:border-r-[1px]">
           <div className="flex flex-col">
             <p className="mt-0">
               You can earn{" "}
@@ -109,7 +109,7 @@ const Home: NextPage = () => {
         </section>
 
         {/* Docs section */}
-        <section className="bg-black p-6 lg:p-10 text-white">
+        <section className="bg-black p-6 lg:p-10 text-white border-x-[1px] border-b-[1px] border-black lg:border-x-0 lg:border-b-[1px]">
           <h1 className="text-lg">Useful links | Docs</h1>
           <ul className="list-disc list-outside pl-4">
             <li className="my-4">
