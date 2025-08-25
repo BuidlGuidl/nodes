@@ -58,7 +58,7 @@ const Home: NextPage = () => {
         {/* Second row for mobile - flex row to make sections share the row */}
         <div className="flex flex-row flex-1">
           {/* Screenshot section */}
-          <section className="bg-[#DDDDDD] w-7/12 lg:flex-1 p-6 flex justify-center border-x-[1px] border-b-[1px] border-black lg:border-b-0">
+          <section className="bg-[#F6F6F6] w-7/12 lg:flex-1 p-6 flex justify-center border-x-[1px] border-b-[1px] border-black lg:border-b-0">
             <Image
               src="/screenshot-3.png"
               alt="screenshot"
@@ -77,47 +77,39 @@ const Home: NextPage = () => {
       </div>
 
       {/* Second row */}
-      <div className="lg:grid lg:grid-cols-3 mb-10">
+      <div className="lg:grid lg:grid-cols-3 lg:border-x-[1px] lg:border-black">
         {/* Map section */}
-        <section className="col-span-2 bg-[#F6F6F6] p-6 lg:p-10 border-x-[1px] border-black lg:border-b-[1px]">
-          <div className="flex flex-row items-center gap-4">
-            <h1 className="text-lg m-0">📡 Clients running</h1>
-            <Image src={liveTag} alt="live tag" className="w-16 animate-pulse-fast" />
-          </div>
-          <div className="relative flex items-center justify-center pt-10">
-            <Image src={map} alt="map" />
-            {/* Continent tags */}
-            <div className="text-xs md:text-sm lg:text-base flex items-center justify-center">
-              <div className="bg-[#f359d4] lg:px-3 leading-none absolute top-[26%] right-[33%] lg:right-[37%]">
-                <p className="m-2 xl:my-3 text-center whitespace-nowrap">europe ({continentData?.Europe ?? "..."})</p>
-              </div>
-              <div className="bg-[#f359d4] lg:px-3 leading-none absolute top-[35%] right-[14%] xl:right-[18%] lg:top-[30%]">
-                <p className="m-2 xl:my-3 text-center whitespace-nowrap">asia ({continentData?.Asia ?? "..."})</p>
-              </div>
-              <div className="bg-[#f359d4] lg:px-3 leading-none absolute top-[32%] left-[5%] lg:left-[6%] xl:left-[9%]">
-                <p className="m-2 xl:my-3 text-center whitespace-nowrap">
-                  north america ({continentData?.["North America"] ?? "..."})
-                </p>
-              </div>
-              <div className="bg-[#f359d4] lg:px-3 leading-none absolute bottom-[20%] left-[15%] xl:left-[20%]">
-                <p className="m-2 xl:my-3 text-center whitespace-nowrap">
-                  south america ({continentData?.["South America"] ?? "..."})
-                </p>
-              </div>
-              <div className="bg-[#f359d4] lg:px-3 leading-none absolute bottom-[35%] left-[43%] lg:left-[45%]">
-                <p className="m-2 xl:my-3 text-center whitespace-nowrap">africa ({continentData?.Africa ?? "..."})</p>
-              </div>
-              <div className="bg-[#f359d4] lg:px-3 leading-none absolute bottom-[10%] right-[5%] lg:bottom-[13%]">
-                <p className="m-2 xl:my-3 text-center whitespace-nowrap">
-                  australia ({continentData?.Australia ?? "..."})
-                </p>
-              </div>
+        <section className="bg-[#DDDDDD] col-span-2 p-6 lg:p-10 border-x-[1px] border-black lg:border-x-0 lg:border-b-[1px] lg:border-r-[1px]">
+          <div className="flex flex-col">
+            <p className="mt-0">
+              You can earn{" "}
+              <a href="https://bread.buidlguidl.com/" target="_blank" rel="noreferrer" className="link">
+                BuidlGuidl Bread
+              </a>{" "}
+              (
+              <a
+                href="https://basescan.org/address/0xF9206cA52a336Fba43264bc6822046D60aEdfc3C"
+                target="_blank"
+                rel="noreferrer"
+                className="link"
+              >
+                BGBRD
+              </a>
+              ) by handling requests for the distributed{" "}
+              <a href="https://rpc.buidlguidl.com/" target="_blank" rel="noreferrer" className="link">
+                BuidlGuidl Mainnet RPC
+              </a>
+              .
+            </p>
+            <p className="mt-10">Start your BG Client with the --owner flag set to your eth address or ens:</p>
+            <div className="bg-black p-2 lg:p-4 mb-10 text-white text-sm overflow-auto">
+              <p className="m-2">node index.js --owner &lt;address or ens&gt;</p>
             </div>
           </div>
         </section>
 
         {/* Docs section */}
-        <section className="bg-black p-6 lg:p-10 text-white">
+        <section className="bg-black p-6 lg:p-10 text-white border-x-[1px] border-b-[1px] border-black lg:border-x-0 lg:border-b-[1px]">
           <h1 className="text-lg">Useful links | Docs</h1>
           <ul className="list-disc list-outside pl-4">
             <li className="my-4">
@@ -156,6 +148,49 @@ const Home: NextPage = () => {
               </a>
             </li>
           </ul>
+        </section>
+      </div>
+
+      {/* Third row */}
+      <div className="lg:grid lg:grid-cols-3 mb-10">
+        {/* Map section */}
+        <section className="col-span-3 bg-[#F6F6F6] p-6 lg:p-10 border-x-[1px] border-black border-b-[1px]">
+          <div className="flex flex-row items-center gap-4">
+            <h1 className="text-lg m-0">📡 Contributing clients</h1>
+            <Image src={liveTag} alt="live tag" className="w-16 animate-pulse-fast" />
+          </div>
+          <div className="flex items-center justify-center pt-10">
+            <div className="relative">
+              <Image src={map} alt="map" />
+              {/* Continent tags */}
+              <div className="text-xs md:text-sm lg:text-base">
+                <div className="bg-[#f359d4] lg:px-3 leading-none absolute top-[18%] right-[38%] lg:right-[42%]">
+                  <p className="m-2 xl:my-3 text-center whitespace-nowrap">europe ({continentData?.Europe ?? "..."})</p>
+                </div>
+                <div className="bg-[#f359d4] lg:px-3 leading-none absolute top-[27%] right-[17%] xl:right-[18%] lg:top-[27%]">
+                  <p className="m-2 xl:my-3 text-center whitespace-nowrap">asia ({continentData?.Asia ?? "..."})</p>
+                </div>
+                <div className="bg-[#f359d4] lg:px-3 leading-none absolute top-[26%] left-[1%] sm:left-[7%] lg:left-[10%] xl:left-[9%]">
+                  <p className="m-2 xl:my-3 text-center whitespace-nowrap">
+                    north america ({continentData?.["North America"] ?? "..."})
+                  </p>
+                </div>
+                <div className="bg-[#f359d4] lg:px-3 leading-none absolute bottom-[22%] left-[12%] sm:left-[20%] xl:left-[22%]">
+                  <p className="m-2 xl:my-3 text-center whitespace-nowrap">
+                    south america ({continentData?.["South America"] ?? "..."})
+                  </p>
+                </div>
+                <div className="bg-[#f359d4] lg:px-3 leading-none absolute bottom-[39%] left-[45%] lg:left-[46%]">
+                  <p className="m-2 xl:my-3 text-center whitespace-nowrap">africa ({continentData?.Africa ?? "..."})</p>
+                </div>
+                <div className="bg-[#f359d4] lg:px-3 leading-none absolute bottom-[16%] right-[2%] sm:right-[6%] lg:right-[8%]">
+                  <p className="m-2 xl:my-3 text-center whitespace-nowrap">
+                    australia ({continentData?.Australia ?? "..."})
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
         </section>
       </div>
 
