@@ -70,8 +70,8 @@ const Home: NextPage = () => {
           </section>
 
           {/* Satellite section */}
-          <section className="bg-[#39E9CE] p-6 w-5/12 lg:flex-1 flex justify-center border-r-[1px] border-b-[1px] border-black lg:border-r-0 lg:border-l-0 lg:border-b-0">
-            <Image src="/sat_green_xmas.gif" alt="satellite" className="object-contain" width={436} height={535} />
+          <section className="bg-[#20F658] p-6 w-5/12 lg:flex-1 flex justify-center border-r-[1px] border-b-[1px] border-black lg:border-r-0 lg:border-l-0 lg:border-b-0">
+            <Image src="/satellite-10fps.gif" alt="satellite" className="object-contain" width={436} height={535} />
           </section>
         </div>
       </div>
