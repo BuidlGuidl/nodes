@@ -105,6 +105,12 @@ const Home: NextPage = () => {
             <div className="bg-black p-2 lg:p-4 mb-6 text-white text-sm overflow-auto">
               <p className="m-2">node index.js --owner &lt;address or ens&gt;</p>
             </div>
+            <p>
+              Add --tor to also serve your node&apos;s RPC over Tor. No open ports, and nobody learns anyone&apos;s IP:
+            </p>
+            <div className="bg-black p-2 lg:p-4 mb-6 text-white text-sm overflow-auto">
+              <p className="m-2">node index.js --owner &lt;address or ens&gt; --tor</p>
+            </div>
             <a
               href="https://apps.apple.com/de/app/bg-client/id6756518184?l=en-GB"
               target="_blank"
