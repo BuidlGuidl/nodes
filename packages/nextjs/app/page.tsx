@@ -111,6 +111,13 @@ const Home: NextPage = () => {
             <div className="bg-black p-2 lg:p-4 mb-6 text-white text-sm overflow-auto">
               <p className="m-2">node index.js --owner &lt;address or ens&gt; --tor</p>
             </div>
+            <p>
+              Add --debug-trace to also serve the debug and trace RPC calls (for things like transaction simulation).
+              Works best with --archive:
+            </p>
+            <div className="bg-black p-2 lg:p-4 mb-6 text-white text-sm overflow-auto">
+              <p className="m-2">node index.js --owner &lt;address or ens&gt; --archive --debug-trace</p>
+            </div>
             <a
               href="https://apps.apple.com/de/app/bg-client/id6756518184?l=en-GB"
               target="_blank"
